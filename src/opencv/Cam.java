@@ -103,9 +103,11 @@ public class Cam {
                 cvRectangle(grabbedImage, cvPoint(x, y), cvPoint(x+w, y+h), CvScalar.RED, 1, CV_AA, 0);
                 
                 if (cX < this.thPx) {
-                	this.controller.getGui().printConsole("Nach links: " + (this.thPx - cX) * 100 / this.thPx + "%"); 
+                	this.controller.getGui().printConsole("Nach links: " + (this.thPx - cX) * 100 / this.thPx + "%");
+                	this.controller.getSerial().send(3);
                 } else if (cX > (this.xPx - this.thPx)) {
                 	this.controller.getGui().printConsole("Nach rechts: " + ((cX - (this.xPx - this.thPx)) * 100 / this.thPx) + "%"); 
+                	this.controller.getSerial().send(4);
                 }
             }
             
