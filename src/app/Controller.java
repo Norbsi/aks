@@ -7,18 +7,21 @@ import gui.Gui;
 public class Controller {
 	private Gui 			gui;
 	private ComMapper 		serial;
-	private Configuration 	configutration;
+	private Configuration 	configuration;
 	
     public static void main(String[] args) {
     	new Controller();
     }
     
     public Controller() {
-    	this.configutration = new Configuration();
+    	this.configuration = new Configuration();
     	this.gui 			= new Gui(this);
     	this.serial 		= new ComMapper(this);
-		final Thread thread = new Thread(new CamThread(this));
-		thread.start();
+		
+    	if (this.configuration.getCamOn()) {
+    		final Thread thread = new Thread(new CamThread(this));
+    		thread.start();
+    	}
     }
     
     public Gui getGui() {
@@ -26,7 +29,7 @@ public class Controller {
     }
     
     public Configuration getConfiguration() {
-    	return this.configutration;
+    	return this.configuration;
     }
     
     public ComMapper getSerial() {

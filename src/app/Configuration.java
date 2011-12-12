@@ -12,6 +12,7 @@ import org.ini4j.InvalidFileFormatException;
 public class Configuration {
 	private 				int		baud, border, yres, min, deviceid;
 	private 				String	port;
+	private					boolean camOn;
 	
 	private transient final	File 	inifile = new File("config.ini");
 	private transient 		Ini 	ini;
@@ -25,6 +26,8 @@ public class Configuration {
 		this.border				= Integer.parseInt(this.ini.get("cam", "border"));
 		this.yres 				= Integer.parseInt(this.ini.get("cam", "yres"));
 		this.min 				= Integer.parseInt(this.ini.get("cam", "min"));
+		
+		this.camOn 				= Boolean.parseBoolean(this.ini.get("cam", "on"));
 		
 		this.deviceid			= Integer.parseInt(this.ini.get("cam", "deviceid"));
 	}
@@ -96,5 +99,9 @@ public class Configuration {
 
 	public int getDeviceId() {
 		return this.deviceid;
+	}
+	
+	public boolean getCamOn() {
+		return this.camOn;
 	}
 }
