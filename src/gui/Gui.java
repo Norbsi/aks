@@ -3,15 +3,19 @@ package gui;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 
+import javax.swing.JTextArea;
+
 import app.Controller;
 import app.KL;
+import app.State;
 
 public class Gui {
 	private MainFrame 	mainFrame;
 	private Controller 	controller;
 	private Console		console, send, receive;
 	private KL 			kl;
-
+	private JTextArea	state;
+	
 	/**
 	 * Create the application.
 	 */
@@ -36,6 +40,8 @@ public class Gui {
 		this.mainFrame.getContentPane().add(this.console);
 		this.mainFrame.getContentPane().add(this.receive);
 		this.mainFrame.getContentPane().add(this.send);
+		this.mainFrame.getContentPane().add(this.state = new JTextArea());
+		this.state.setEditable(false);
 		
 		this.mainFrame.setMinimumSize(new Dimension(800,400));
 		this.mainFrame.pack();
@@ -52,6 +58,10 @@ public class Gui {
 	
 	public void printReceive(String text) {
 		this.receive.append(text);
+	}
+	
+	public void updateState(State state) {
+		this.state.setText(state.toString());
 	}
 	
 	public KL getKL() {
