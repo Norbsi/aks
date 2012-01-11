@@ -1,5 +1,7 @@
 package opencv;
 
+import java.text.DecimalFormat;
+
 import app.Configuration;
 import app.Controller;
 
@@ -99,7 +101,15 @@ public class Cam {
                 int cX = x + w/2;
                 int cY = y + h/2;
                 
-            	this.controller.getGui().printConsole("Körper gefunden: " + ( cX ) + ":" + ( cY ) );
+                float wf = (float) w;
+                float hf = (float) h;
+                double dia = Math.sqrt((wf * wf) + (hf * hf));
+
+                double dist = this.log(0.45, dia - 42) + 6.6;
+                
+                DecimalFormat df = new DecimalFormat("###.##");
+                
+            	this.controller.getGui().printConsole("Körper gefunden: " + ( cX ) + ":" + ( cY ) + " " + df.format(dist) + "m");
                 cvRectangle(grabbedImage, cvPoint(x, y), cvPoint(x+w, y+h), CvScalar.RED, 1, CV_AA, 0);
                 
                 if (cX < this.thPx) {
@@ -119,5 +129,11 @@ public class Cam {
         }
         grabber.stop();
         frame.dispose();
+    }
+    
+    private double log(double base, double x)
+    {
+    	// Math.log is base e, natural log, ln
+    	return Math.log( x ) / Math.log( base );
     }
 }
