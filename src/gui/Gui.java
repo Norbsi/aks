@@ -7,7 +7,7 @@ import javax.swing.JTextArea;
 
 import app.Controller;
 import app.KL;
-import app.State;
+import app.CamState;
 
 public class Gui {
 	private MainFrame 	mainFrame;
@@ -60,7 +60,7 @@ public class Gui {
 		this.receive.append(text);
 	}
 	
-	public void updateState(State state) {
+	public void updateState(CamState state) {
 		this.state.setText(state.toString());
 	}
 	

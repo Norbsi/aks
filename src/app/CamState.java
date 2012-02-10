@@ -1,11 +1,11 @@
 package app;
 
-public class State {
+public class CamState {
 	private boolean 	cam;
 	private int 		camPosX, camPosY;
 	private Controller	controller;
 	
-	public State(Controller controller) {
+	public CamState(Controller controller) {
 		this.controller = controller;
 		this.cam 		= false;
 		this.camPosX 	= 0;

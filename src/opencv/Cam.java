@@ -81,48 +81,37 @@ public class Cam {
             cvCvtColor(grabbedImage, grayImage, CV_BGR2GRAY);
             CvSeq 	faces 	= cvHaarDetectObjects(grayImage, classifier, storage, 1.1, 3, CV_HAAR_DO_CANNY_PRUNING);
             int 	total 	= faces.total();
-            CvRect rFin 	= null;
             
             for (int i = 0; i < total; i++) {
                 CvRect r = new CvRect(cvGetSeqElem(faces, i));
                
-        		if (
-        			(r.width() > this.minPx)
-        			&& (
-        				(rFin == null)
-        				|| (r.width() > rFin.width())
-        			)
-        		) {
-        			rFin = r;
+        		if (r.width() > this.minPx) {
+        			double x = r.x(), y = r.y(), width = r.width(), height = r.height();
+                    
+                    double dia = Math.sqrt((width * width) + (height * height));
+                    double dist = this.log(0.45, dia - 42) + 6.6;
+                    
+                    this.controller.getCamController().bodyFound(
+                    	(x/ (double) this.xPx),
+                    	(y/ (double) this.yPx),
+                    	(width/ (double) this.xPx),
+                    	(height/ (double) this.yPx),
+                    	dist
+                    );
+                    
+                    cvRectangle(
+                    	grabbedImage,
+                    	cvPoint(
+                    		r.x(),
+                    		r.y()
+                    	),
+                    	cvPoint(
+                    		r.x() + r.width(),
+                    		r.y() + r.height()
+                    	),
+                    	CvScalar.RED, 1, CV_AA, 0
+                    );
         		}
-            }
-            
-            if (rFin != null) {
-                double x = rFin.x(), y = rFin.y(), width = rFin.width(), height = rFin.height();
-                
-                double dia = Math.sqrt((width * width) + (height * height));
-                double dist = this.log(0.45, dia - 42) + 6.6;
-                
-                this.controller.getCamController().bodyFound(
-                	(x/ (double) this.xPx),
-                	(y/ (double) this.yPx),
-                	(width/ (double) this.xPx),
-                	(height/ (double) this.yPx),
-                	dist
-                );
-                
-                cvRectangle(
-                	grabbedImage,
-                	cvPoint(
-                		rFin.x(),
-                		rFin.y()
-                	),
-                	cvPoint(
-                		rFin.x() + rFin.width(),
-                		rFin.y() + rFin.height()
-                	),
-                	CvScalar.RED, 1, CV_AA, 0
-                );
             }
             
             cvLine(grabbedImage, cvPoint(this.thPx, 0), cvPoint(this.thPx, this.yPx), CvScalar.GREEN, 1, CV_AA, 0);
