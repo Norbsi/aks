@@ -11,6 +11,7 @@ public class Controller {
 	private Configuration 	configuration;
 	private State			state;
 	private Parser			parser;
+	private CamController	camController;
 	
     public static void main(String[] args) {
     	new Controller();
@@ -21,6 +22,7 @@ public class Controller {
     	this.gui 			= new Gui(this);
     	this.serial 		= new ComMapper(this);
     	this.parser			= new Parser(this);
+    	this.camController	= new CamController(this);
     	this.state			= new State(this);
 		
     	if (this.configuration.getCamOn()) {
@@ -48,5 +50,9 @@ public class Controller {
     
     public Parser getParser() {
     	return this.parser;
+    }
+    
+    public CamController getCamController() {
+    	return this.camController;
     }
 }

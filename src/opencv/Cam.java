@@ -8,6 +8,8 @@ import app.Controller;
 import com.googlecode.javacpp.Loader;
 import com.googlecode.javacv.*;
 import com.googlecode.javacv.cpp.*;
+import com.googlecode.javacv.cpp.opencv_core.CvScalar;
+
 import static com.googlecode.javacv.cpp.opencv_core.*;
 import static com.googlecode.javacv.cpp.opencv_imgproc.*;
 import static com.googlecode.javacv.cpp.opencv_objdetect.*;
@@ -66,9 +68,9 @@ public class Cam {
         // - The createFrom() factory method can construct an IplImage from a BufferedImage.
         // - There are also a few copy*() methods for BufferedImage<->IplImage data transfers.
         IplImage 	grabbedImage 	= grabber.grab();
-        int 		width  			= grabbedImage.width();
-        int 		height 			= grabbedImage.height();
-        IplImage 	grayImage    	= IplImage.create(width, height, IPL_DEPTH_8U, 1);
+        int 		imageWidth  	= grabbedImage.width();
+        int 		imageHeight 	= grabbedImage.height();
+        IplImage 	grayImage    	= IplImage.create(imageWidth, imageHeight, IPL_DEPTH_8U, 1);
 
         // Objects allocated with a create*() or clone() factory method are automatically released
         // by the garbage collector, but may still be explicitly released by calling release().
@@ -96,29 +98,31 @@ public class Cam {
             }
             
             if (rFin != null) {
-                int x = rFin.x(), y = rFin.y(), w = rFin.width(), h = rFin.height();
+                double x = rFin.x(), y = rFin.y(), width = rFin.width(), height = rFin.height();
                 
-                int cX = x + w/2;
-                int cY = y + h/2;
-                
-                float wf = (float) w;
-                float hf = (float) h;
-                double dia = Math.sqrt((wf * wf) + (hf * hf));
-
+                double dia = Math.sqrt((width * width) + (height * height));
                 double dist = this.log(0.45, dia - 42) + 6.6;
                 
-                DecimalFormat df = new DecimalFormat("###.##");
+                this.controller.getCamController().bodyFound(
+                	(x/ (double) this.xPx),
+                	(y/ (double) this.yPx),
+                	(width/ (double) this.xPx),
+                	(height/ (double) this.yPx),
+                	dist
+                );
                 
-            	this.controller.getGui().printConsole("Körper gefunden: " + ( cX ) + ":" + ( cY ) + " " + df.format(dist) + "m");
-                cvRectangle(grabbedImage, cvPoint(x, y), cvPoint(x+w, y+h), CvScalar.RED, 1, CV_AA, 0);
-                
-                if (cX < this.thPx) {
-                	this.controller.getGui().printConsole("Nach links: " + (this.thPx - cX) * 100 / this.thPx + "%");
-                	this.controller.getSerial().send(3);
-                } else if (cX > (this.xPx - this.thPx)) {
-                	this.controller.getGui().printConsole("Nach rechts: " + ((cX - (this.xPx - this.thPx)) * 100 / this.thPx) + "%"); 
-                	this.controller.getSerial().send(4);
-                }
+                cvRectangle(
+                	grabbedImage,
+                	cvPoint(
+                		rFin.x(),
+                		rFin.y()
+                	),
+                	cvPoint(
+                		rFin.x() + rFin.width(),
+                		rFin.y() + rFin.height()
+                	),
+                	CvScalar.RED, 1, CV_AA, 0
+                );
             }
             
             cvLine(grabbedImage, cvPoint(this.thPx, 0), cvPoint(this.thPx, this.yPx), CvScalar.GREEN, 1, CV_AA, 0);
