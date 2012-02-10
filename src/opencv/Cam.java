@@ -15,7 +15,7 @@ import static com.googlecode.javacv.cpp.opencv_objdetect.*;
 public class Cam {
 	private Controller 		controller;
 	private Configuration 	configuration;
-	private int 			xPx, yPx, thPx, minPx;
+	private int 			xPx, yPx, thPx;
 	
 	public Cam(Controller controller) {
 		this.controller 	= controller;
@@ -26,7 +26,6 @@ public class Cam {
 		this.thPx	= this.xPx * this.configuration.getBorder() / 200;
 		
 		this.controller.getGui().printConsole("Auflösung (px): " + this.xPx + "x" + this.yPx);
-		this.controller.getGui().printConsole("Minimal Objektgröße (px): " + this.minPx);
 		this.controller.getGui().printConsole("Threshold (px): " + this.thPx + " und " + (this.xPx - this.thPx));	
 	}
 	

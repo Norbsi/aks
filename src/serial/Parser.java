@@ -19,14 +19,14 @@ public class Parser {
 		while (match.find()) {
 			pos = match.group(1);
 			System.out.println(pos);
-			this.controller.getState().setCamPosX(Integer.parseInt(pos));
+			this.controller.getCamState().setCamPosX(Integer.parseInt(pos));
 		}
 		pat = Pattern.compile("PosY: ([-]?\\d+)");
 		match = pat.matcher(in);
 		while (match.find()) {
 			pos = match.group(1);
 			System.out.println(pos);
-			this.controller.getState().setCamPosY(Integer.parseInt(pos));
+			this.controller.getCamState().setCamPosY(Integer.parseInt(pos));
 		}
 	}
 }

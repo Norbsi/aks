@@ -9,7 +9,8 @@ public class Controller {
 	private Gui 			gui;
 	private ComMapper 		serial;
 	private Configuration 	configuration;
-	private CamState			state;
+	private CamState		camState;
+	private RoomState		roomState;
 	private Parser			parser;
 	private CamController	camController;
 	
@@ -23,12 +24,13 @@ public class Controller {
     	this.serial 		= new ComMapper(this);
     	this.parser			= new Parser(this);
     	this.camController	= new CamController(this);
-    	this.state			= new CamState(this);
+    	this.camState		= new CamState(this);
+    	this.roomState		= new RoomState(this);
 		
     	if (this.configuration.getCamOn()) {
     		final Thread thread = new Thread(new CamThread(this));
     		thread.start();
-    		this.state.setCam(true);
+    		this.camState.setCam(true);
     	}
     }
     
@@ -44,8 +46,8 @@ public class Controller {
     	return this.serial;
     }
     
-    public CamState getState() {
-    	return this.state;
+    public CamState getCamState() {
+    	return this.camState;
     }
     
     public Parser getParser() {
@@ -54,5 +56,9 @@ public class Controller {
     
     public CamController getCamController() {
     	return this.camController;
+    }
+    
+    public RoomState getRoomState() {
+    	return this.roomState;
     }
 }
