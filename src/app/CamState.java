@@ -44,6 +44,8 @@ public class CamState {
 	public String toString() {
 		String on = this.getCam() ? "an" : "aus";
 		
-		return "Kamera: " + on + "\nX-Position: " + this.getCamPosX() + "\nY-Position: " + this.getCamPosY() + "\n";  
+		return "Kamera: " + on + "\n" +
+		"X-Position: " + this.getCamPosX() + "\n" +
+		"Y-Position: " + this.getCamPosY() + "\n";  
 	}
 }

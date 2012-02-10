@@ -1,7 +1,5 @@
 package opencv;
 
-import java.text.DecimalFormat;
-
 import app.Configuration;
 import app.Controller;
 
@@ -26,7 +24,6 @@ public class Cam {
 		this.yPx 	= this.configuration.getYres();
 		this.xPx 	= this.yPx * 4 / 3;
 		this.thPx	= this.xPx * this.configuration.getBorder() / 200;
-		this.minPx 	= this.xPx * this.configuration.getMin() / 100;
 		
 		this.controller.getGui().printConsole("Auflösung (px): " + this.xPx + "x" + this.yPx);
 		this.controller.getGui().printConsole("Minimal Objektgröße (px): " + this.minPx);
@@ -85,12 +82,12 @@ public class Cam {
             for (int i = 0; i < total; i++) {
                 CvRect r = new CvRect(cvGetSeqElem(faces, i));
                
-        		if (r.width() > this.minPx) {
-        			double x = r.x(), y = r.y(), width = r.width(), height = r.height();
-                    
-                    double dia = Math.sqrt((width * width) + (height * height));
-                    double dist = this.log(0.45, dia - 42) + 6.6;
-                    
+    			double x = r.x(), y = r.y(), width = r.width(), height = r.height();
+                
+                double dia = Math.sqrt((width * width) + (height * height));
+                double dist = this.log(0.45, dia - 42) + 6.6;
+                
+        		if (dist > 0) {
                     this.controller.getCamController().bodyFound(
                     	(x/ (double) this.xPx),
                     	(y/ (double) this.yPx),
