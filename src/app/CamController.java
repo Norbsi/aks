@@ -4,13 +4,15 @@ import java.text.DecimalFormat;
 
 public class CamController {
 	private Controller 		controller;
-	// TODO config
-	private double 			maxCamPos 	= 570;
-	private double			maxVelocity	= 0.6;
+	private double 			maxCamPos;
+	private double			maxVelocity;
 	private DecimalFormat 	df 			= new DecimalFormat("#.##");
 	
 	public CamController(Controller controller) {
 		this.controller = controller;
+		
+		this.maxCamPos 		= this.controller.getConfiguration().getMaxCamPos();
+		this.maxVelocity	= this.controller.getConfiguration().getMaxVelocity();
 	}
 	
 	public void bodyFound(double x, double y, double width, double height, double dist) {
@@ -48,7 +50,7 @@ public class CamController {
     	}
     	
     	if (closest == null) {
-    		this.controller.getRoomState().addBody(new Body(absCX, absCY, absCZ));
+    		this.controller.getRoomState().addBody(new Body(absCX, absCY, absCZ, this.controller));
     	} else {
     		closest.setPos(absCX, absCY, absCZ);
     	}

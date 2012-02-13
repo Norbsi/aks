@@ -10,9 +10,10 @@ import org.ini4j.Ini;
 import org.ini4j.InvalidFileFormatException;
 
 public class Configuration {
-	private 				int		baud, border, yres, deviceid;
+	private 				int		baud, border, yres, deviceid, detectBonus, decay, decayTime, maxCamPos;
 	private 				String	port;
 	private					boolean camOn;
+	private					float	maxVelocity;
 	
 	private transient final	File 	inifile = new File("config.ini");
 	private transient 		Ini 	ini;
@@ -25,10 +26,14 @@ public class Configuration {
 		
 		this.border				= Integer.parseInt(this.ini.get("cam", "border"));
 		this.yres 				= Integer.parseInt(this.ini.get("cam", "yres"));
-		
 		this.camOn 				= Boolean.parseBoolean(this.ini.get("cam", "on"));
-		
 		this.deviceid			= Integer.parseInt(this.ini.get("cam", "deviceid"));
+		this.maxCamPos			= Integer.parseInt(this.ini.get("cam", "maxcampos"));
+		
+		this.detectBonus		= Integer.parseInt(this.ini.get("algorithm", "detectbonus"));
+		this.decay				= Integer.parseInt(this.ini.get("algorithm", "decay"));
+		this.decayTime			= Integer.parseInt(this.ini.get("algorithm", "decaytime"));
+		this.maxVelocity		= Float.parseFloat(this.ini.get("algorithm", "maxvelocity"));
 	}
 	
 	private void loadIniFile() {
@@ -98,5 +103,21 @@ public class Configuration {
 	
 	public boolean getCamOn() {
 		return this.camOn;
+	}
+	
+	public int getDetectBonus() {
+		return this.detectBonus;
+	}
+	public int getDecay() {
+		return this.decay;
+	}
+	public int getDecayTime() {
+		return this.decayTime;
+	}
+	public int getMaxCamPos() {
+		return this.maxCamPos;
+	}
+	public float getMaxVelocity() {
+		return this.maxVelocity;
 	}
 }

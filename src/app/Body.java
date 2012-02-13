@@ -3,12 +3,14 @@ package app;
 import java.util.Date;
 
 public class Body {
-	private double 	x, y, z;
-	private int		probability;
-	private Date	lastSeen;
+	private double 		x, y, z;
+	private int			probability;
+	private Date		lastSeen;
+	private Controller 	controller;
 	
-	public Body(double x, double y, double z) {
-		this.probability 	= 10;
+	public Body(double x, double y, double z, Controller controller) {
+		this.controller		= controller;
+		this.probability 	= this.controller.getConfiguration().getDetectBonus();
 		this.x 				= x;
 		this.y 				= y;
 		this.z 				= z;
@@ -28,13 +30,12 @@ public class Body {
 	}
 	
 	public void setPos(double x, double y, double z) {
-		this.x = x;
-		this.y = y;
-		this.z = z;
-		this.lastSeen = new Date();
-		// TODO config
-		this.probability += 2;
-		if (this.probability > 100) this.probability = 100; 
+		this.x 				= x;
+		this.y 				= y;
+		this.z 				= z;
+		this.lastSeen 		= new Date();
+		
+		this.addProbability(this.controller.getConfiguration().getDetectBonus());
 	}
 	
 	public double getX() {
@@ -51,9 +52,14 @@ public class Body {
 		return this.probability;
 	}
 	
+	private void addProbability(int added) {
+		this.probability += added;
+		
+		if (this.probability > 100) this.probability = 100;
+		if (this.probability < 0) 	this.probability = 0;
+	}
+	
 	public void decay() {
-		// TODO config
-		this.probability -= 4;
-		if (this.probability < 0) this.probability = 0;
+		this.addProbability(-this.controller.getConfiguration().getDecay());
 	}
 }
