@@ -1,11 +1,13 @@
 package app;
 
+import java.text.DecimalFormat;
 import java.util.LinkedList;
 import java.util.List;
 
 public class RoomState {
-	private Controller controller;
-	private List<Body> bodyList;
+	private Controller 		controller;
+	private List<Body> 		bodyList;
+	private	DecimalFormat 	df = new DecimalFormat("#.##");
 
 	public RoomState(Controller controller) {
 		this.controller = controller;
@@ -23,7 +25,7 @@ public class RoomState {
 	public String toString() {
 		String out = "";
 		for (Body body : this.bodyList) {
-			out += "%: " + body.getProbability() + "x:" + body.getX() + " y:" + body.getY() + " z:" + body.getZ() + "\n";
+			out += "%:" + body.getProbability() + " x:" + df.format(body.getX()) + "m y:" + df.format(body.getY()) + "m z:" + df.format(body.getZ()) + "m\n";
 		}
 		
 		return out;

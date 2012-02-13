@@ -32,7 +32,9 @@ public class Body {
 		this.y = y;
 		this.z = z;
 		this.lastSeen = new Date();
-		this.probability += 10;
+		// TODO config
+		this.probability += 2;
+		if (this.probability > 100) this.probability = 100; 
 	}
 	
 	public double getX() {
@@ -50,7 +52,8 @@ public class Body {
 	}
 	
 	public void decay() {
-		this.probability -= 2;
+		// TODO config
+		this.probability -= 4;
 		if (this.probability < 0) this.probability = 0;
 	}
 }
