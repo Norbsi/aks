@@ -19,4 +19,13 @@ public class RoomState {
 	public void addBody(Body newBody) {
 		this.bodyList.add(newBody);
 	}
+	
+	public String toString() {
+		String out = "";
+		for (Body body : this.bodyList) {
+			out += "%: " + body.getProbability() + "x:" + body.getX() + " y:" + body.getY() + " z:" + body.getZ() + "\n";
+		}
+		
+		return out;
+	}
 }

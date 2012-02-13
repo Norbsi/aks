@@ -34,4 +34,18 @@ public class Body {
 		this.lastSeen = new Date();
 		this.probability += 10;
 	}
+	
+	public double getX() {
+		return this.x;
+	}
+	public double getY() {
+		return this.y;
+	}
+	public double getZ() {
+		return this.z;
+	}
+	
+	public int getProbability() {
+		return this.probability;
+	}
 }
