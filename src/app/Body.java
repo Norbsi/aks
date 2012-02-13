@@ -48,4 +48,9 @@ public class Body {
 	public int getProbability() {
 		return this.probability;
 	}
+	
+	public void decay() {
+		this.probability -= 2;
+		if (this.probability < 0) this.probability = 0;
+	}
 }

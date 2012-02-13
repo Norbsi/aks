@@ -1,5 +1,7 @@
 package app;
 
+import java.util.Timer;
+
 import opencv.CamThread;
 import serial.ComMapper;
 import serial.Parser;
@@ -13,6 +15,7 @@ public class Controller {
 	private RoomState		roomState;
 	private Parser			parser;
 	private CamController	camController;
+	private Timer			timer;
 	
     public static void main(String[] args) {
     	new Controller();
@@ -32,6 +35,9 @@ public class Controller {
     		thread.start();
     		this.camState.setCam(true);
     	}
+    	
+    	 this.timer = new Timer();
+		 this.timer.schedule(new StateTask(this), 0, 500);
     }
     
     public Gui getGui() {

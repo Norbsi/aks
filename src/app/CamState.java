@@ -14,7 +14,7 @@ public class CamState {
 	}
 	
 	private void updateView() {
-		this.controller.getGui().updateState(this);
+		this.controller.getGui().updateCamState(this);
 	}
 	
 	public boolean getCam() {

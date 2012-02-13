@@ -28,4 +28,10 @@ public class RoomState {
 		
 		return out;
 	}
+	
+	public void decay() {
+		for (Body body : this.bodyList) {
+			body.decay();
+		}
+	}
 }

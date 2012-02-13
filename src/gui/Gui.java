@@ -64,11 +64,11 @@ public class Gui {
 		this.receive.append(text);
 	}
 	
-	public void updateState(CamState camState) {
+	public void updateCamState(CamState camState) {
 		this.camState.setText(camState.toString());
 	}
 	
-	public void updateState(RoomState roomState) {
+	public void updateRoomState(RoomState roomState) {
 		this.roomState.setText(roomState.toString());
 	}
 	
