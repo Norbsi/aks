@@ -21,6 +21,7 @@ public class CamController {
 		
         double cX 		= x + width/2;
         double cY 		= y + height/2;
+        // TODO explain
         double relCX 	= (cX - 0.5) * 1.29;
         double relCY 	= camPosRad + (cY - 0.5) * -0.7;
 

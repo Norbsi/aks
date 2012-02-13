@@ -32,8 +32,13 @@ public class RoomState {
 	}
 	
 	public void decay() {
+		List<Body> decayed = new LinkedList<Body>();
+		
 		for (Body body : this.bodyList) {
 			body.decay();
+			if (body.getProbability() == 0) decayed.add(body);
 		}
+		
+		this.bodyList.removeAll(decayed);
 	}
 }
