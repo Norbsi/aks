@@ -13,8 +13,6 @@ import gui.Gui;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.text.DecimalFormat;
-import java.util.Arrays;
 import java.util.TooManyListenersException;
 
 import app.Controller;
@@ -269,25 +267,14 @@ public class CamSerialConnection implements SerialPortEventListener, CommPortOwn
 		*/
     }
     
-    private String intToString(int num) {
-    	if (num < 0) {
-    		num = Math.abs(num);
-    		num += 1000;
-    	}
-    	
-        char[] zeros = new char[4];
-        Arrays.fill(zeros, '0');
-        // format number as String
-        DecimalFormat df = new DecimalFormat(String.valueOf(zeros));
-
-        return df.format(num);
-    }
-    
 	public void send(int input) {
+		input = input / 4;
+		input += 127;
+		
 		if (os != null) {
 		    try {
 		    	os.write(input);
-		    	this.gui.printSend(this.intToString(input));
+		    	this.gui.printSend(String.valueOf(input));
 		    } catch (IOException e) {
 		    	System.err.println("OutputStream write error: " + e);
 		    }
