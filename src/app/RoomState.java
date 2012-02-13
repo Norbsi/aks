@@ -15,4 +15,8 @@ public class RoomState {
 	public List<Body> getBodyList() {
 		return this.bodyList;
 	}
+	
+	public void addBody(Body newBody) {
+		this.bodyList.add(newBody);
+	}
 }
