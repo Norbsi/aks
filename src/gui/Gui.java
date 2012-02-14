@@ -2,7 +2,6 @@ package gui;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.image.BufferedImage;
 
 import javax.swing.JTextArea;
 

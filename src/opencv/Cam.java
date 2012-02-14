@@ -122,7 +122,6 @@ public class Cam {
     
     private double log(double base, double x)
     {
-    	// Math.log is base e, natural log, ln
     	return Math.log( x ) / Math.log( base );
     }
 }
