@@ -63,14 +63,26 @@ public class CamController {
 		Body masterBody = null;
 		
 		for (Body body : this.controller.getRoomState().getBodyList()) {
-			if (masterBody == null || masterBody.getProbability() < body.getProbability()) {
+			if (
+				(masterBody == null || masterBody.getProbability() < body.getProbability())
+				// TODO config
+				&& body.getProbability() >= 30
+			) {
 				masterBody = body;
 			}
 		}
 		
-		double rad 		= Math.atan(masterBody.getX() / masterBody.getY());
-		double camPos	= rad / (Math.PI / this.maxCamPos);
-		
-		this.controller.getSerial().send((int) camPos);
+		if (masterBody != null) {
+			double bodyRad 		= Math.atan(masterBody.getX() / masterBody.getY());
+			double camPos		= this.controller.getCamState().getCamPosX();
+			double camPosRad	= camPos * Math.PI / this.maxCamPos;
+			
+			// TODO tweak, config...
+			if (Math.abs(bodyRad - camPosRad) > 0.21) {
+				double newCamPos	= bodyRad / (Math.PI / this.maxCamPos);
+				this.controller.getSerial().send((int) newCamPos);
+				this.controller.getGui().printConsole("out" + newCamPos);
+			}
+		}
 	}
 }
