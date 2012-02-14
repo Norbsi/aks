@@ -30,11 +30,11 @@ public class KL implements KeyListener {
 				break;
 			case KeyEvent.VK_A: 
 				gui.printConsole("LINKS gedrückt");
-				this.controller.getSerial().send(3);
+				this.controller.getSerial().send(this.controller.getCamState().getCamPosX()-20);
 				break;
 			case KeyEvent.VK_D: 
 				gui.printConsole("RECHTS gedrückt");
-				this.controller.getSerial().send(4);
+				this.controller.getSerial().send(this.controller.getCamState().getCamPosX()+20);
 				break;
 			case KeyEvent.VK_SPACE: 
 				gui.printConsole("ZENTRIEREN gedrückt");
