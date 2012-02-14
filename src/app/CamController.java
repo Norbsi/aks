@@ -37,6 +37,8 @@ public class CamController {
     	);
     	
     	Body closest = null;
+    	
+    	this.controller.getRoomState().lock(true);
     	for (Body candidate : this.controller.getRoomState().getBodyList()) {
     		double velocity = candidate.velocity(absCX, absCY, absCZ);
     		
@@ -49,11 +51,11 @@ public class CamController {
     			}
     		}
     	}
+    	this.controller.getRoomState().lock(false);
     	
     	if (closest == null) {
     		this.controller.getRoomState().addBody(new Body(absCX, absCY, absCZ, this.controller));
     	} else {
-    		this.controller.getGui().printConsole(String.valueOf(closest.velocity(absCX, absCY, absCZ)));
     		closest.setPos(absCX, absCY, absCZ);
     	}
     	
@@ -82,7 +84,6 @@ public class CamController {
 			if (Math.abs(bodyRad - camPosRad) > 0.21) {
 				double newCamPos	= bodyRad / (Math.PI / this.maxCamPos);
 				this.controller.getSerial().send((int) newCamPos);
-				this.controller.getGui().printConsole("out" + newCamPos);
 			}
 		}
 	}

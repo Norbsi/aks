@@ -7,6 +7,7 @@ import java.util.List;
 public class RoomState {
 	private List<Body> 		bodyList;
 	private	DecimalFormat 	df = new DecimalFormat("#.##");
+	private boolean			lock = false;
 
 	public RoomState() {
 		this.bodyList 	= new LinkedList<Body>();
@@ -40,6 +41,15 @@ public class RoomState {
 			if (body.getProbability() == 0) decayed.add(body);
 		}
 		
+		while (this.locked()) {};
 		this.bodyList.removeAll(decayed);
+	}
+	
+	public void lock(boolean lock) {
+		this.lock = lock;
+	}
+	
+	public boolean locked() {
+		return this.lock;
 	}
 }

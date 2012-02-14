@@ -22,7 +22,6 @@ public class Body {
 		long 	time 		= (new Date()).getTime() - this.lastSeen.getTime();
 		double	velocity	= distance / time * 1000;
 		
-		System.out.println(velocity);
 		return velocity;
 	}
 	
