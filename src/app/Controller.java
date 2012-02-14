@@ -28,7 +28,7 @@ public class Controller {
     	this.parser			= new Parser(this);
     	this.camController	= new CamController(this);
     	this.camState		= new CamState(this);
-    	this.roomState		= new RoomState(this);
+    	this.roomState		= new RoomState();
 		
     	if (this.configuration.getCamOn()) {
     		final Thread thread = new Thread(new CamThread(this));

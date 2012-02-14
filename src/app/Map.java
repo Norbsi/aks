@@ -8,6 +8,10 @@ import java.awt.RenderingHints;
 import javax.swing.JComponent;
 
 public class Map extends JComponent {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8929711985144231275L;
 	private Controller 	controller;
 	private int			maxCamPos;
 	
