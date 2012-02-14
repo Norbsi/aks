@@ -14,6 +14,7 @@ public class StateTask extends TimerTask {
 		if (this.controller.getGui() != null) {			
 			this.controller.getGui().updateRoomState(this.controller.getRoomState());
 			this.controller.getRoomState().decay();
+			this.controller.getGui().updateMap();
 		}
 	}
 }

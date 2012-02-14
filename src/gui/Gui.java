@@ -2,20 +2,23 @@ package gui;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JTextArea;
 
 import app.Controller;
 import app.KL;
 import app.CamState;
+import app.Map;
 import app.RoomState;
 
 public class Gui {
-	private MainFrame 	mainFrame;
-	private Controller 	controller;
-	private Console		console, send, receive;
-	private KL 			kl;
-	private JTextArea	camState, roomState;
+	private MainFrame 		mainFrame;
+	private Controller 		controller;
+	private Console			console, send, receive;
+	private KL 				kl;
+	private JTextArea		camState, roomState;
+	private Map				map;
 	
 	/**
 	 * Create the application.
@@ -43,6 +46,7 @@ public class Gui {
 		this.mainFrame.getContentPane().add(this.send);
 		this.mainFrame.getContentPane().add(this.camState = new JTextArea());
 		this.mainFrame.getContentPane().add(this.roomState = new JTextArea());
+		this.mainFrame.getContentPane().add(this.map = new Map(this.controller));
 		
 		this.camState.setEditable(false);
 		this.roomState.setEditable(false);
@@ -70,6 +74,10 @@ public class Gui {
 	
 	public void updateRoomState(RoomState roomState) {
 		this.roomState.setText(roomState.toString());
+	}
+	
+	public void updateMap() {
+		this.map.repaint();
 	}
 	
 	public KL getKL() {
