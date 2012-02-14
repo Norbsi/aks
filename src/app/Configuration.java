@@ -13,7 +13,7 @@ public class Configuration {
 	private 				int		baud, border, yres, deviceid, detectBonus, decay, decayTime, maxCamPos;
 	private 				String	port;
 	private					boolean camOn;
-	private					float	maxVelocity;
+	private					float	maxVelocity, minHeight;
 	
 	private transient final	File 	inifile = new File("config.ini");
 	private transient 		Ini 	ini;
@@ -34,6 +34,7 @@ public class Configuration {
 		this.decay				= Integer.parseInt(this.ini.get("algorithm", "decay"));
 		this.decayTime			= Integer.parseInt(this.ini.get("algorithm", "decaytime"));
 		this.maxVelocity		= Float.parseFloat(this.ini.get("algorithm", "maxvelocity"));
+		this.minHeight			= Float.parseFloat(this.ini.get("algorithm", "minheight"));
 	}
 	
 	private void loadIniFile() {
@@ -119,5 +120,8 @@ public class Configuration {
 	}
 	public float getMaxVelocity() {
 		return this.maxVelocity;
+	}
+	public float getMinHeight() {
+		return this.minHeight;
 	}
 }

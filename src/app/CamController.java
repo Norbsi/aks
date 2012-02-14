@@ -7,12 +7,14 @@ public class CamController {
 	private double 			maxCamPos;
 	private double			maxVelocity;
 	private DecimalFormat 	df 			= new DecimalFormat("#.##");
+	private float			minHeight;
 	
 	public CamController(Controller controller) {
 		this.controller = controller;
 		
 		this.maxCamPos 		= this.controller.getConfiguration().getMaxCamPos();
 		this.maxVelocity	= this.controller.getConfiguration().getMaxVelocity();
+		this.minHeight		= this.controller.getConfiguration().getMinHeight();
 	}
 	
 	public void bodyFound(double x, double y, double width, double height, double dist) {
@@ -36,30 +38,32 @@ public class CamController {
 			df.format(absCZ) + "m"
     	);
     	
-    	Body closest = null;
-    	
-    	this.controller.getRoomState().lock(true);
-    	for (Body candidate : this.controller.getRoomState().getBodyList()) {
-    		double velocity = candidate.velocity(absCX, absCY, absCZ);
-    		
-    		if (velocity <= this.maxVelocity) {
-    			if (
-    				closest == null
-    				|| closest.velocity(absCX, absCY, absCZ) < velocity
-    			) {
-    				closest = candidate;
-    			}
-    		}
+    	if (absCZ > this.minHeight) {
+	    	Body closest = null;
+	    	
+	    	this.controller.getRoomState().lock(true);
+	    	for (Body candidate : this.controller.getRoomState().getBodyList()) {
+	    		double velocity = candidate.velocity(absCX, absCY, absCZ);
+	    		
+	    		if (velocity <= this.maxVelocity) {
+	    			if (
+	    				closest == null
+	    				|| closest.velocity(absCX, absCY, absCZ) < velocity
+	    			) {
+	    				closest = candidate;
+	    			}
+	    		}
+	    	}
+	    	this.controller.getRoomState().lock(false);
+	    	
+	    	if (closest == null) {
+	    		this.controller.getRoomState().addBody(new Body(absCX, absCY, absCZ, this.controller));
+	    	} else {
+	    		closest.setPos(absCX, absCY, absCZ);
+	    	}
+	    	
+	    	this.focus();
     	}
-    	this.controller.getRoomState().lock(false);
-    	
-    	if (closest == null) {
-    		this.controller.getRoomState().addBody(new Body(absCX, absCY, absCZ, this.controller));
-    	} else {
-    		closest.setPos(absCX, absCY, absCZ);
-    	}
-    	
-    	this.focus();
 	}
 	
 	private void focus() {
