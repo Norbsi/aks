@@ -32,6 +32,7 @@ public class Map extends JComponent {
 		
 		g.setColor(Color.DARK_GRAY);
 				
+		if (this.controller.getCamState() != null) {
 		double camPos		= this.controller.getCamState().getCamPosX();
 		double camPosAngle	= camPos * 180 / this.maxCamPos;
 		
@@ -42,5 +43,6 @@ public class Map extends JComponent {
     	for (Body body : this.controller.getRoomState().getBodyList()) {
     		g.fillOval((int) (body.getX()/14 * width) + width/2, (int) (body.getY()/14 * -width) + height/2, width / 40, height / 40);
     	}
+		}
      }
 }

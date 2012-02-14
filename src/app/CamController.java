@@ -85,7 +85,7 @@ public class CamController {
 			double camPosRad	= camPos * Math.PI / this.maxCamPos;
 			
 			// TODO tweak, config...
-			if (Math.abs(bodyRad - camPosRad) > 0.21) {
+			if (Math.abs(bodyRad - camPosRad) > 0.02) {
 				double newCamPos	= bodyRad / (Math.PI / this.maxCamPos);
 				this.controller.getSerial().send((int) newCamPos);
 			}
