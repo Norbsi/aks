@@ -53,6 +53,7 @@ public class CamController {
     	if (closest == null) {
     		this.controller.getRoomState().addBody(new Body(absCX, absCY, absCZ, this.controller));
     	} else {
+    		this.controller.getGui().printConsole(String.valueOf(closest.velocity(absCX, absCY, absCZ)));
     		closest.setPos(absCX, absCY, absCZ);
     	}
     	

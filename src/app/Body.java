@@ -19,9 +19,10 @@ public class Body {
 	
 	public double velocity(double x, double y, double z) {
 		double 	distance 	= this.distance(x, y, z);
-		long 	time 		= (new Date()).getTime() - this.lastSeen.getTime() / 1000;
-		double	velocity	= distance / time;
+		long 	time 		= (new Date()).getTime() - this.lastSeen.getTime();
+		double	velocity	= distance / time * 1000;
 		
+		System.out.println(velocity);
 		return velocity;
 	}
 	
