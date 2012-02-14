@@ -8,10 +8,12 @@ import java.awt.RenderingHints;
 import javax.swing.JComponent;
 
 public class Map extends JComponent {
-	private Controller controller;
+	private Controller 	controller;
+	private int			maxCamPos;
 	
 	public Map(Controller controller) {
 		this.controller = controller;
+		this.maxCamPos 	= this.controller.getConfiguration().getMaxCamPos();
 	}
 	
     public void paint(Graphics gg) {
@@ -24,17 +26,16 @@ public class Map extends JComponent {
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, width, height);
 		
-		g.setColor(Color.WHITE);
+		g.setColor(Color.DARK_GRAY);
+				
+		double camPos		= this.controller.getCamState().getCamPosX();
+		double camPosAngle	= camPos * 180 / this.maxCamPos;
 		
-		
-		g.drawRect(width / 2, height / 2, width / 50, height / 50);
-		
-		g.drawLine(width / 2, height / 2, width / 3, -100);
+		g.fillArc(-width/2, -height / 2, width*2, height*2, 90 + 30 + (int) camPosAngle, -60);
 		
 		g.setColor(Color.YELLOW);
     	for (Body body : this.controller.getRoomState().getBodyList()) {
     		g.fillOval((int) (body.getX()/14 * width) + width/2, (int) (body.getY()/14 * -width) + height/2, width / 40, height / 40);
-    		System.out.println((int) (body.getX()/14 * -width));
     	}
      }
 }
