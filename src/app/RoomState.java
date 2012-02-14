@@ -52,4 +52,9 @@ public class RoomState {
 	public boolean locked() {
 		return this.lock;
 	}
+	
+	public void reset() {
+		while (this.locked()) {};
+		this.bodyList = new LinkedList<Body>();
+	}
 }
