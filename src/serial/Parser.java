@@ -18,7 +18,6 @@ public class Parser {
 		Matcher match = pat.matcher(in);
 		while (match.find()) {
 			pos = match.group(1);
-			System.out.println(pos);
 			this.controller.getCamState().setCamPosX(Integer.parseInt(pos));
 		}
 		pat = Pattern.compile("PosY: ([-]?\\d+)");

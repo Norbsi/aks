@@ -41,12 +41,12 @@ public class KL implements KeyListener {
 				this.controller.getSerial().send(0);
 				break;
 			case KeyEvent.VK_E: 
-				gui.printConsole("e (100) gedrückt");
-				this.controller.getSerial().send(100);
+				gui.printConsole("e (50) gedrückt");
+				this.controller.getSerial().send(-512);
 				break;
 			case KeyEvent.VK_Q: 
 				gui.printConsole("q (-200) gedrückt");
-				this.controller.getSerial().send(-200);
+				this.controller.getSerial().send(508);
 				break;
 			default:
 		}

@@ -269,7 +269,7 @@ public class CamSerialConnection implements SerialPortEventListener, CommPortOwn
     
 	public void send(int input) {
 		input = input / 4;
-		input += 127;
+		input += 128;
 		
 		if (os != null) {
 		    try {
