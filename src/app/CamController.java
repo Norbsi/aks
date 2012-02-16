@@ -29,8 +29,8 @@ public class CamController {
         double cX 		= x + width/2;
         double cY 		= y + height/2;
         // TODO explain
-        double relCX 	= (cX - 0.5) * 1.29;
-        double relCY 	= this.getCamPosRad() + (cY - 0.5) * -0.7;
+        double relCX 	= (cX - 0.5) * 1.021315143;
+        double relCY 	= this.getCamPosRad() + (cY - 0.5) * -1.140895649;
 
     	double absCX = dist * Math.sin(relCX);
     	double absCY = dist * Math.cos(relCX);

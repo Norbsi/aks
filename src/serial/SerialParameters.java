@@ -20,7 +20,7 @@ public class SerialParameters {
     */
     public SerialParameters () {
 		this("", 
-		     9600, 
+		     115200, 
 		     SerialPort.FLOWCONTROL_NONE,
 		     SerialPort.FLOWCONTROL_NONE,
 		     SerialPort.DATABITS_8,
