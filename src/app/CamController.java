@@ -4,23 +4,24 @@ import java.text.DecimalFormat;
 
 public class CamController {
 	private Controller 		controller;
-	private double 			maxCamPos, maxVelocity, moveThreshold;
-	private DecimalFormat 	df 			= new DecimalFormat("#.##");
-	private double			minHeight;
+	private double 			maxVelocity, minHeight, moveThreshold;
+	private DecimalFormat 	df = new DecimalFormat("#.##");
+	private int				maxCamPos, maxCamAngle;
 	
 	public CamController(Controller controller) {
-		this.controller = controller;
+		this.controller 	= controller;
 		
 		this.maxCamPos 		= this.controller.getConfiguration().getMaxCamPos();
+		this.maxCamAngle	= this.controller.getConfiguration().getMaxCamAngle();
 		this.maxVelocity	= this.controller.getConfiguration().getMaxVelocity();
 		this.minHeight		= this.controller.getConfiguration().getMinHeight();
 		// convert to radians
-		this.moveThreshold	= this.controller.getConfiguration().getMoveThreshold() / 57.2957795;
+		this.moveThreshold	= this.controller.getConfiguration().getMoveThreshold() / 57.295779513;
 	}
 	
 	private double getCamPosRad() {
 		double camPos = this.controller.getCamState().getCamPosX();
-		return camPos / this.maxCamPos * Math.PI/4 ;
+		return (camPos / this.maxCamPos) * (this.maxCamAngle / 57.295779513);
 	}
 	
 	public void bodyFound(double x, double y, double width, double height, double dist) {		
@@ -83,11 +84,10 @@ public class CamController {
 		}
 		
 		if (masterBody != null) {
-			double bodyRad 		= Math.atan(masterBody.getX() / masterBody.getY());
+			double bodyRad = Math.atan(masterBody.getX() / masterBody.getY());
 
-			// TODO tweak, config...
 			if (Math.abs(bodyRad - this.getCamPosRad()) > this.moveThreshold) {
-				double newCamPos	= bodyRad / ((Math.PI/4) / this.maxCamPos);
+				double newCamPos = bodyRad / ((this.maxCamAngle / 57.295779513) / this.maxCamPos);
 				this.controller.getSerial().send((int) newCamPos);
 			}
 		}

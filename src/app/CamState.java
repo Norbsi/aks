@@ -1,15 +1,20 @@
 package app;
 
+import java.text.DecimalFormat;
+
 public class CamState {
-	private boolean 	cam;
-	private int 		camPosX, camPosY;
-	private Controller	controller;
+	private boolean 		cam;
+	private int 			camPosX, camPosY, maxCamPos, maxCamAngle;
+	private DecimalFormat 	df = new DecimalFormat("#.##");
+	private Controller		controller;
 	
 	public CamState(Controller controller) {
-		this.controller = controller;
-		this.cam 		= false;
-		this.camPosX 	= 0;
-		this.camPosY 	= 0;
+		this.controller 	= controller;
+		this.cam 			= false;
+		this.camPosX 		= 0;
+		this.camPosY 		= 0;
+		this.maxCamPos		= this.controller.getConfiguration().getMaxCamPos();
+		this.maxCamAngle	= this.controller.getConfiguration().getMaxCamAngle();
 		this.updateView();
 	}
 	
@@ -42,10 +47,11 @@ public class CamState {
 	}
 	
 	public String toString() {
-		String on = this.getCam() ? "an" : "aus";
+		String on 	= this.getCam() ? "an" : "aus";
+		double deg 	= (double) this.getCamPosX() / this.maxCamPos * this.maxCamAngle;
 		
 		return "Kamera: " + on + "\n" +
-		"X-Position: " + this.getCamPosX() + "\n" +
-		"Y-Position: " + this.getCamPosY() + "\n";  
+			"X-Position: " + this.getCamPosX() + " (" + df.format(deg) + "°)\n" +
+			"Y-Position: " + this.getCamPosY() + "\n";  
 	}
 }
