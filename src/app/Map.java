@@ -32,19 +32,19 @@ public class Map extends JComponent {
 		g.fillRect(0, 0, width, height);
 				
 		if (this.controller.getCamState() != null) {
-		double camPos		= this.controller.getCamState().getCamPosX();
-		double camPosAngle	= camPos * 45 / this.maxCamPos;
-		
-		g.setColor(Color.DARK_GRAY);
-		// 90->start angle (north), 30->half field of view
-		g.fillArc(-width/2, -height/2, width*2, height*2, 90 + 30 - (int) camPosAngle, -60);
-		g.setColor(Color.GRAY);
-		g.fillArc(-width/2, -height/2, width*2, height*2, 90 + this.moveThreshold/2 - (int) camPosAngle, -this.moveThreshold);
-		
-		g.setColor(Color.YELLOW);
-    	for (Body body : this.controller.getRoomState().getBodyList()) {
-    		g.fillOval((int) (body.getX()/14 * width) + width/2, (int) (body.getY()/14 * -width) + height/2, width / 40, height / 40);
-    	}
+			double camPos		= this.controller.getCamState().getCamPosX();
+			double camPosAngle	= camPos * 45 / this.maxCamPos;
+			
+			g.setColor(Color.DARK_GRAY);
+			// 90->start angle (north), 30->half field of view
+			g.fillArc(-width/2, -height/2, width*2, height*2, 90 + 30 - (int) camPosAngle, -60);
+			g.setColor(Color.GRAY);
+			g.fillArc(-width/2, -height/2, width*2, height*2, 90 + this.moveThreshold/2 - (int) camPosAngle, -this.moveThreshold);
+			
+			g.setColor(Color.YELLOW);
+	    	for (Body body : this.controller.getRoomState().getBodyList()) {
+	    		if (body.getProbability() >= 30) g.fillOval((int) (body.getX()/14 * width) + width/2, (int) (body.getY()/14 * -width) + height/2, width / 40, height / 40);
+	    	}
 		}
      }
 }
