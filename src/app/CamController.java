@@ -87,7 +87,6 @@ public class CamController {
 
 			// TODO tweak, config...
 			if (Math.abs(bodyRad - this.getCamPosRad()) > this.moveThreshold) {
-				
 				double newCamPos	= bodyRad / ((Math.PI/4) / this.maxCamPos);
 				this.controller.getSerial().send((int) newCamPos);
 			}

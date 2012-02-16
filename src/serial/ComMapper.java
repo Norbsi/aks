@@ -36,6 +36,10 @@ public class ComMapper {
 		}
 	}
 	
+	public void knock() {
+		this.sconn.knock();
+	}
+	
 	public void send(int input) {
 		this.sconn.send(input);
 	}

@@ -65,8 +65,7 @@ public class CamSerialConnection implements SerialPortEventListener, CommPortOwn
     public void openConnection() throws SerialConnectionException {
 	    // Obtain a CommPortIdentifier object for the port you want to open.
 		try {
-		    portId = 
-			 CommPortIdentifier.getPortIdentifier(parameters.getPortName());
+		    portId = CommPortIdentifier.getPortIdentifier(parameters.getPortName());
 		} catch (NoSuchPortException e) {
 		    throw new SerialConnectionException(e.getMessage());
 		}
@@ -243,8 +242,8 @@ public class CamSerialConnection implements SerialPortEventListener, CommPortOwn
 	   		    }
 	
 				// Append received data to messageAreaIn.
-				this.gui.printReceive(new String(inputBuffer));
-				this.controller.getParser().process(new String(inputBuffer));
+			   	this.gui.printReceive(new String(inputBuffer));
+			  	this.controller.getParser().process(new String(inputBuffer));
 			break;
 	
 		    // If break event append BREAK RECEIVED message.
@@ -265,6 +264,18 @@ public class CamSerialConnection implements SerialPortEventListener, CommPortOwn
 		    PortRequestedDialog prd = new PortRequestedDialog(parent);
 		}
 		*/
+    }
+    
+    public void knock() {
+		if (os != null) {
+		    try {
+		    	os.write(0);
+		    } catch (IOException e) {
+		    	System.err.println("OutputStream write error: " + e);
+		    }
+		} else {
+			this.gui.printSend("Keine Verbindung");
+		}
     }
     
 	public void send(int input) {

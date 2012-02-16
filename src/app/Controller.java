@@ -38,6 +38,7 @@ public class Controller {
     	
     	 this.timer = new Timer();
 		 this.timer.schedule(new StateTask(this), 0, 500);
+		 this.timer.schedule(new HackTask(this), 0, 10);
     }
     
     public Gui getGui() {
