@@ -34,7 +34,7 @@ public class Map extends JComponent {
 				
 		if (this.controller.getCamState() != null) {
 		double camPos		= this.controller.getCamState().getCamPosX();
-		double camPosAngle	= camPos * 180 / this.maxCamPos;
+		double camPosAngle	= camPos * 45 / this.maxCamPos;
 		
 		// 90->start angle (north), 30->half field of view
 		g.fillArc(-width/2, -height/2, width*2, height*2, 90 + 30 - (int) camPosAngle, -60);

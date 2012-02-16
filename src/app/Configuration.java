@@ -10,7 +10,7 @@ import org.ini4j.Ini;
 import org.ini4j.InvalidFileFormatException;
 
 public class Configuration {
-	private 				int		baud, border, yres, deviceid, detectBonus, decay, decayTime, maxCamPos;
+	private 				int		baud, border, yres, deviceid, detectBonus, decay, decayTime, maxCamPos, moveThreshold;
 	private 				String	port;
 	private					boolean camOn;
 	private					float	maxVelocity, minHeight;
@@ -24,7 +24,6 @@ public class Configuration {
 		this.baud 				= Integer.parseInt(this.ini.get("serial", "baud"));
 		this.port				= this.ini.get("serial", "port");
 		
-		this.border				= Integer.parseInt(this.ini.get("cam", "border"));
 		this.yres 				= Integer.parseInt(this.ini.get("cam", "yres"));
 		this.camOn 				= Boolean.parseBoolean(this.ini.get("cam", "on"));
 		this.deviceid			= Integer.parseInt(this.ini.get("cam", "deviceid"));
@@ -35,6 +34,7 @@ public class Configuration {
 		this.decayTime			= Integer.parseInt(this.ini.get("algorithm", "decaytime"));
 		this.maxVelocity		= Float.parseFloat(this.ini.get("algorithm", "maxvelocity"));
 		this.minHeight			= Float.parseFloat(this.ini.get("algorithm", "minheight"));
+		this.moveThreshold		= Integer.parseInt(this.ini.get("algorithm", "movethreshold"));
 	}
 	
 	private void loadIniFile() {
@@ -90,10 +90,6 @@ public class Configuration {
 		return this.port;
 	}
 
-	public int getBorder() {
-		return this.border;
-	}
-
 	public int getYres() {
 		return this.yres;
 	}
@@ -123,5 +119,8 @@ public class Configuration {
 	}
 	public float getMinHeight() {
 		return this.minHeight;
+	}
+	public int getMoveThreshold() {
+		return this.moveThreshold;
 	}
 }

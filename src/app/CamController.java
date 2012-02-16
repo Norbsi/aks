@@ -4,10 +4,9 @@ import java.text.DecimalFormat;
 
 public class CamController {
 	private Controller 		controller;
-	private double 			maxCamPos;
-	private double			maxVelocity;
+	private double 			maxCamPos, maxVelocity, moveThreshold;
 	private DecimalFormat 	df 			= new DecimalFormat("#.##");
-	private float			minHeight;
+	private double			minHeight;
 	
 	public CamController(Controller controller) {
 		this.controller = controller;
@@ -15,18 +14,21 @@ public class CamController {
 		this.maxCamPos 		= this.controller.getConfiguration().getMaxCamPos();
 		this.maxVelocity	= this.controller.getConfiguration().getMaxVelocity();
 		this.minHeight		= this.controller.getConfiguration().getMinHeight();
+		// convert to radians
+		this.moveThreshold	= this.controller.getConfiguration().getMoveThreshold() / 57.2957795;
 	}
 	
-	public void bodyFound(double x, double y, double width, double height, double dist) {
-		double camPos		= this.controller.getCamState().getCamPosX();
-		// / 2 -> 90° max
-		double camPosRad	= camPos * Math.PI / this.maxCamPos / 2;
-		
+	private double getCamPosRad() {
+		double camPos = this.controller.getCamState().getCamPosX();
+		return camPos / this.maxCamPos * Math.PI/4 ;
+	}
+	
+	public void bodyFound(double x, double y, double width, double height, double dist) {		
         double cX 		= x + width/2;
         double cY 		= y + height/2;
         // TODO explain
         double relCX 	= (cX - 0.5) * 1.29;
-        double relCY 	= camPosRad + (cY - 0.5) * -0.7;
+        double relCY 	= this.getCamPosRad() + (cY - 0.5) * -0.7;
 
     	double absCX = dist * Math.sin(relCX);
     	double absCY = dist * Math.cos(relCX);
@@ -82,13 +84,11 @@ public class CamController {
 		
 		if (masterBody != null) {
 			double bodyRad 		= Math.atan(masterBody.getX() / masterBody.getY());
-			double camPos		= this.controller.getCamState().getCamPosX();
-			double camPosRad	= camPos * Math.PI / this.maxCamPos;
-			
+
 			// TODO tweak, config...
-			if (Math.abs(bodyRad - camPosRad) > 0.5) {
+			if (Math.abs(bodyRad - this.getCamPosRad()) > this.moveThreshold) {
 				
-				double newCamPos	= bodyRad / (Math.PI / 2 / this.maxCamPos);
+				double newCamPos	= bodyRad / ((Math.PI/4) / this.maxCamPos);
 				this.controller.getSerial().send((int) newCamPos);
 			}
 		}

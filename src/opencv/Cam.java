@@ -23,7 +23,7 @@ public class Cam {
 		
 		this.yPx 	= this.configuration.getYres();
 		this.xPx 	= this.yPx * 4 / 3;
-		this.thPx	= this.xPx * this.configuration.getBorder() / 200;
+		//this.thPx	= this.xPx * this.configuration.getBorder() / 200;
 		
 		this.controller.getGui().printConsole("Auflösung (px): " + this.xPx + "x" + this.yPx);
 		this.controller.getGui().printConsole("Threshold (px): " + this.thPx + " und " + (this.xPx - this.thPx));	
