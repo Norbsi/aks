@@ -19,12 +19,13 @@ public class CamController {
 	
 	public void bodyFound(double x, double y, double width, double height, double dist) {
 		double camPos		= this.controller.getCamState().getCamPosX();
-		double camPosRad	= camPos * Math.PI / this.maxCamPos;
+		// / 2 -> 90° max
+		double camPosRad	= camPos * Math.PI / this.maxCamPos / 2;
 		
         double cX 		= x + width/2;
         double cY 		= y + height/2;
-        // TODO explain 1.29
-        double relCX 	= (cX - 0.5) * 1.5;
+        // TODO explain
+        double relCX 	= (cX - 0.5) * 1.29;
         double relCY 	= camPosRad + (cY - 0.5) * -0.7;
 
     	double absCX = dist * Math.sin(relCX);
@@ -85,8 +86,9 @@ public class CamController {
 			double camPosRad	= camPos * Math.PI / this.maxCamPos;
 			
 			// TODO tweak, config...
-			if (Math.abs(bodyRad - camPosRad) > 0.02) {
-				double newCamPos	= bodyRad / (Math.PI / this.maxCamPos);
+			if (Math.abs(bodyRad - camPosRad) > 0.5) {
+				
+				double newCamPos	= bodyRad / (Math.PI / 2 / this.maxCamPos);
 				this.controller.getSerial().send((int) newCamPos);
 			}
 		}
