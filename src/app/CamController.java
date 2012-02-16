@@ -6,7 +6,7 @@ public class CamController {
 	private Controller 		controller;
 	private double 			maxVelocity, minHeight, moveThreshold;
 	private DecimalFormat 	df = new DecimalFormat("#.##");
-	private int				maxCamPos, maxCamAngle;
+	private int				maxCamPos, maxCamAngle, bodyThreshold;
 	
 	public CamController(Controller controller) {
 		this.controller 	= controller;
@@ -17,6 +17,7 @@ public class CamController {
 		this.minHeight		= this.controller.getConfiguration().getMinHeight();
 		// convert to radians
 		this.moveThreshold	= this.controller.getConfiguration().getMoveThreshold() / 57.295779513;
+		this.bodyThreshold	= this.controller.getConfiguration().getBodyThreshold();
 	}
 	
 	private double getCamPosRad() {
@@ -77,7 +78,7 @@ public class CamController {
 			if (
 				(masterBody == null || masterBody.getProbability() < body.getProbability())
 				// TODO config
-				&& body.getProbability() >= 30
+				&& body.getProbability() >= this.bodyThreshold
 			) {
 				masterBody = body;
 			}

@@ -13,12 +13,13 @@ public class Map extends JComponent {
 	 */
 	private static final long serialVersionUID = -8929711985144231275L;
 	private Controller 	controller;
-	private int			maxCamPos, moveThreshold;	
+	private int			maxCamPos, moveThreshold, bodyThreshold;	
 	
 	public Map(Controller controller) {
 		this.controller 	= controller;
 		this.maxCamPos 		= this.controller.getConfiguration().getMaxCamPos();
 		this.moveThreshold	= this.controller.getConfiguration().getMoveThreshold();
+		this.bodyThreshold	= this.controller.getConfiguration().getBodyThreshold();
 	}
 	
     public void paint(Graphics gg) {
@@ -43,7 +44,7 @@ public class Map extends JComponent {
 			
 			g.setColor(Color.YELLOW);
 	    	for (Body body : this.controller.getRoomState().getBodyList()) {
-	    		if (body.getProbability() >= 30) g.fillOval((int) (body.getX()/14 * width) + width/2, (int) (body.getY()/14 * -width) + height/2, width / 40, height / 40);
+	    		if (body.getProbability() >= this.bodyThreshold) g.fillOval((int) (body.getX()/14 * width) + width/2, (int) (body.getY()/14 * -width) + height/2, width / 40, height / 40);
 	    	}
 		}
      }

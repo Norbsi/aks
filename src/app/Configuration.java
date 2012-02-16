@@ -10,7 +10,7 @@ import org.ini4j.Ini;
 import org.ini4j.InvalidFileFormatException;
 
 public class Configuration {
-	private 				int		baud, yres, deviceid, detectBonus, decay, decayTime, maxCamPos, maxCamAngle, moveThreshold;
+	private 				int		baud, yres, deviceid, detectBonus, decay, decayTime, maxCamPos, maxCamAngle, moveThreshold, bodyThreshold;
 	private 				String	port;
 	private					boolean camOn;
 	private					float	maxVelocity, minHeight;
@@ -36,6 +36,7 @@ public class Configuration {
 		this.maxVelocity		= Float.parseFloat(this.ini.get("algorithm", "maxvelocity"));
 		this.minHeight			= Float.parseFloat(this.ini.get("algorithm", "minheight"));
 		this.moveThreshold		= Integer.parseInt(this.ini.get("algorithm", "movethreshold"));
+		this.bodyThreshold		= Integer.parseInt(this.ini.get("algorithm", "bodythreshold"));
 	}
 	
 	private void loadIniFile() {
@@ -126,5 +127,8 @@ public class Configuration {
 	}
 	public int getMoveThreshold() {
 		return this.moveThreshold;
+	}
+	public int getBodyThreshold() {
+		return this.bodyThreshold;
 	}
 }

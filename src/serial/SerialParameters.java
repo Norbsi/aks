@@ -21,7 +21,7 @@ public class SerialParameters {
     public SerialParameters () {
 		this("", 
 		     9600, 
-		     SerialPort.FLOWCONTROL_NONE,//FLOWCONTROL_RTSCTS_IN,
+		     SerialPort.FLOWCONTROL_NONE,
 		     SerialPort.FLOWCONTROL_NONE,
 		     SerialPort.DATABITS_8,
 		     SerialPort.STOPBITS_1,

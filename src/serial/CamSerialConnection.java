@@ -109,7 +109,7 @@ public class CamSerialConnection implements SerialPortEventListener, CommPortOwn
 	
 		// Set notifyOnDataAvailable to true to allow event driven input.
 		sPort.notifyOnDataAvailable(true);
-	
+		
 		// Set notifyOnBreakInterrup to allow event driven break handling.
 		sPort.notifyOnBreakInterrupt(true);
 	
