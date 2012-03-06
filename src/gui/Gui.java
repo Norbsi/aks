@@ -6,7 +6,7 @@ import java.awt.GridLayout;
 import javax.swing.JTextArea;
 
 import app.Controller;
-import app.KL;
+import app.Keyboard;
 import app.CamState;
 import app.Map;
 import app.RoomState;
@@ -15,7 +15,7 @@ public class Gui {
 	private MainFrame 		mainFrame;
 	private Controller 		controller;
 	private Console			console, send, receive;
-	private KL 				kl;
+	private Keyboard 				kl;
 	private JTextArea		camState, roomState;
 	private Map				map;
 	
@@ -24,7 +24,7 @@ public class Gui {
 	 */
 	public Gui(Controller controller) {
 		this.controller = controller;
-		this.kl 		= new KL(this.controller);
+		this.kl 		= new Keyboard(this.controller);
 		this.initialize();
 	}
 
@@ -79,7 +79,7 @@ public class Gui {
 		this.map.repaint();
 	}
 	
-	public KL getKL() {
+	public Keyboard getKL() {
 		return this.kl;
 	}
 }

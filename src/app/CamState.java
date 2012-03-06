@@ -51,7 +51,7 @@ public class CamState {
 		double deg 	= (double) this.getCamPosX() / this.maxCamPos * this.maxCamAngle;
 		
 		return "Kamera: " + on + "\n" +
-			"X-Position: " + this.getCamPosX() + " (" + df.format(deg) + "Â°)\n" +
+			"X-Position: " + this.getCamPosX() + " (" + df.format(deg) + "°)\n" +
 			"Y-Position: " + this.getCamPosY() + "\n";  
 	}
 }

@@ -5,10 +5,10 @@ import gui.Gui;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class KL implements KeyListener {
+public class Keyboard implements KeyListener {
 	Controller controller;
 	
-	public KL(Controller controller) {
+	public Keyboard(Controller controller) {
 		this.controller = controller;
 	}
 	
@@ -21,34 +21,34 @@ public class KL implements KeyListener {
 				System.exit(0);
 				break;
 			case KeyEvent.VK_S: 
-				gui.printConsole("UNTEN gedrÃ¼ckt");
+				gui.printConsole("UNTEN gedrückt");
 				this.controller.getSerial().send(1);
 				break;
 			case KeyEvent.VK_W: 
-				gui.printConsole("OBEN gedrÃ¼ckt");
+				gui.printConsole("OBEN gedrückt");
 				this.controller.getSerial().send(2);
 				break;
 			case KeyEvent.VK_A: 
-				gui.printConsole("LINKS gedrÃ¼ckt");
+				gui.printConsole("LINKS gedrückt");
 				this.controller.getSerial().send(this.controller.getCamState().getCamPosX()-50);
 				this.controller.getRoomState().reset();
 				break;
 			case KeyEvent.VK_D: 
-				gui.printConsole("RECHTS gedrÃ¼ckt");
+				gui.printConsole("RECHTS gedrückt");
 				this.controller.getSerial().send(this.controller.getCamState().getCamPosX()+50);
 				this.controller.getRoomState().reset();
 				break;
 			case KeyEvent.VK_SPACE: 
-				gui.printConsole("ZENTRIEREN gedrÃ¼ckt");
+				gui.printConsole("ZENTRIEREN gedrückt");
 				this.controller.getSerial().send(0);
 				this.controller.getRoomState().reset();
 				break;
 			case KeyEvent.VK_E: 
-				gui.printConsole("e (100) gedrÃ¼ckt");
+				gui.printConsole("e (100) gedrückt");
 				this.controller.getSerial().send(100);
 				break;
 			case KeyEvent.VK_Q: 
-				gui.printConsole("q (-200) gedrÃ¼ckt");
+				gui.printConsole("q (-200) gedrückt");
 				this.controller.getSerial().send(-200);
 				break;
 			default:
