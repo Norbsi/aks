@@ -15,14 +15,13 @@ public class CamController {
 		this.maxCamAngle	= this.controller.getConfiguration().getMaxCamAngle();
 		this.maxVelocity	= this.controller.getConfiguration().getMaxVelocity();
 		this.minHeight		= this.controller.getConfiguration().getMinHeight();
-		// convert to radians
-		this.moveThreshold	= this.controller.getConfiguration().getMoveThreshold() / 57.295779513;
+		this.moveThreshold	= Math.toRadians(this.controller.getConfiguration().getMoveThreshold());
 		this.bodyThreshold	= this.controller.getConfiguration().getBodyThreshold();
 	}
 	
 	private double getCamPosRad() {
 		double camPos = this.controller.getCamState().getCamPosX();
-		return (camPos / this.maxCamPos) * (this.maxCamAngle / 57.295779513);
+		return (camPos / this.maxCamPos) * Math.toRadians(this.maxCamAngle);
 	}
 	
 	public void bodyFound(double x, double y, double width, double height, double dist) {
@@ -30,11 +29,9 @@ public class CamController {
         double cX 		= x + width/2;
         double cY 		= y + height/2;
         
-        // convert to cam specific angles (radians)
-        // x axis: 65.4° -> 1.140895649 rads
-        // y axis: 58.5° -> 1.021315143 rads
-        double relCX 	= (cX - 0.5) * 1.140895649;
-        double relCY 	= this.getCamPosRad() + ((cY - 0.5) * -1.021315143);
+        // convert to cam specific angles (65.368°x58.517°)
+        double relCX 	= (cX - 0.5) * Math.toRadians(65.368);
+        double relCY 	= this.getCamPosRad() + ((cY - 0.5) * Math.toRadians(-58.517));
 
         // convert to absolute pos
     	double absCX 	= dist * Math.sin(relCX);
@@ -92,7 +89,7 @@ public class CamController {
 			double bodyRad = Math.atan(masterBody.getX() / masterBody.getY());
 
 			if (Math.abs(bodyRad - this.getCamPosRad()) > this.moveThreshold) {
-				double newCamPos = bodyRad / ((this.maxCamAngle / 57.295779513) / this.maxCamPos);
+				double newCamPos = bodyRad / (Math.toRadians(this.maxCamAngle) / this.maxCamPos);
 				this.controller.getSerial().send((int) newCamPos);
 			}
 		}
