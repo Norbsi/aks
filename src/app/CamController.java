@@ -29,9 +29,10 @@ public class CamController {
         double cX 		= x + width/2;
         double cY 		= y + height/2;
         
+        // DIFFERENT X&Y AXIS !!!!!!!!!
         // convert to cam specific angles (65.368°x58.517°)
-        double relCX 	= (cX - 0.5) * Math.toRadians(65.368);
-        double relCY 	= this.getCamPosRad() + ((cY - 0.5) * Math.toRadians(-58.517));
+        double relCX 	= this.getCamPosRad() + (cX - 0.5) * Math.toRadians(65.368);
+        double relCY 	= (cY - 0.5) * Math.toRadians(-58.517);
 
         // convert to absolute pos
     	double absCX 	= dist * Math.sin(relCX);
