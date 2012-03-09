@@ -47,7 +47,7 @@ public class Cam {
         CanvasFrame frame = new CanvasFrame("Kamera Feed");
         frame.setCanvasSize(160, 120);
         
-        frame.addKeyListener(this.controller.getGui().getKL());
+        frame.addKeyListener(this.controller.getGui().getKeyboard());
 
         // OpenCVFrameGrabber uses opencv_highgui, but other more versatile FrameGrabbers
         // include DC1394FrameGrabber, FlyCaptureFrameGrabber, OpenKinectFrameGrabber,

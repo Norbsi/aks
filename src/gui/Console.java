@@ -22,7 +22,7 @@ public class Console extends JScrollPane {
 		this.textArea = textArea;
 		this.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		this.textArea.setEditable(false);
-		this.textArea.addKeyListener(gui.getKL());
+		this.textArea.addKeyListener(gui.getKeyboard());
 	}
 	
 	public void append(String text) {

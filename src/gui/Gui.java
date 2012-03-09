@@ -15,7 +15,7 @@ public class Gui {
 	private MainFrame 		mainFrame;
 	private Controller 		controller;
 	private Console			console, send, receive;
-	private Keyboard 				kl;
+	private Keyboard 		keyboard;
 	private JTextArea		camState, roomState;
 	private Map				map;
 	
@@ -24,7 +24,7 @@ public class Gui {
 	 */
 	public Gui(Controller controller) {
 		this.controller = controller;
-		this.kl 		= new Keyboard(this.controller);
+		this.keyboard 		= new Keyboard(this.controller);
 		this.initialize();
 	}
 
@@ -79,7 +79,7 @@ public class Gui {
 		this.map.repaint();
 	}
 	
-	public Keyboard getKL() {
-		return this.kl;
+	public Keyboard getKeyboard() {
+		return this.keyboard;
 	}
 }
