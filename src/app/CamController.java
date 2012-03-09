@@ -37,7 +37,7 @@ public class CamController {
     	double absCZ = dist * Math.sin(relCY);
     	
     	this.controller.getGui().printConsole(
-			"KÃ¶rper gefunden: x:" +
+			"Körper gefunden: x:" +
 			df.format(absCX) + "m y:" +
 			df.format(absCY) + "m z:" +
 			df.format(absCZ) + "m"
@@ -77,7 +77,6 @@ public class CamController {
 		for (Body body : this.controller.getRoomState().getBodyList()) {
 			if (
 				(masterBody == null || masterBody.getProbability() < body.getProbability())
-				// TODO config
 				&& body.getProbability() >= this.bodyThreshold
 			) {
 				masterBody = body;
