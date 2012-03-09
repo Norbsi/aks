@@ -25,16 +25,21 @@ public class CamController {
 		return (camPos / this.maxCamPos) * (this.maxCamAngle / 57.295779513);
 	}
 	
-	public void bodyFound(double x, double y, double width, double height, double dist) {		
+	public void bodyFound(double x, double y, double width, double height, double dist) {
+		// calculate body-center pos (image) x,y 0..1
         double cX 		= x + width/2;
         double cY 		= y + height/2;
-        // TODO explain
-        double relCX 	= (cX - 0.5) * 1.021315143;
-        double relCY 	= this.getCamPosRad() + (cY - 0.5) * -1.140895649;
+        
+        // convert to cam specific angles (radians)
+        // x axis: 65.4° -> 1.140895649 rads
+        // y axis: 58.5° -> 1.021315143 rads
+        double relCX 	= (cX - 0.5) * 1.140895649;
+        double relCY 	= this.getCamPosRad() + ((cY - 0.5) * -1.021315143);
 
-    	double absCX = dist * Math.sin(relCX);
-    	double absCY = dist * Math.cos(relCX);
-    	double absCZ = dist * Math.sin(relCY);
+        // convert to absolute pos
+    	double absCX 	= dist * Math.sin(relCX);
+    	double absCY 	= dist * Math.cos(relCX);
+    	double absCZ 	= dist * Math.sin(relCY);
     	
     	this.controller.getGui().printConsole(
 			"Körper gefunden: x:" +
