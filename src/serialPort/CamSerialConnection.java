@@ -265,19 +265,7 @@ public class CamSerialConnection implements SerialPortEventListener, CommPortOwn
 		}
 		*/
     }
-    
-    public void knock() {
-		if (os != null) {
-		    try {
-		    	os.write(0);
-		    } catch (IOException e) {
-		    	System.err.println("OutputStream write error: " + e);
-		    }
-		} else {
-			this.gui.printSend("Keine Verbindung");
-		}
-    }
-    
+
 	public void send(int input) {
 		input = input / 4;
 		input += 128;
