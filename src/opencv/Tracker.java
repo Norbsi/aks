@@ -12,12 +12,12 @@ import static com.googlecode.javacv.cpp.opencv_core.*;
 import static com.googlecode.javacv.cpp.opencv_imgproc.*;
 import static com.googlecode.javacv.cpp.opencv_objdetect.*;
 
-public class Cam {
+public class Tracker {
 	private Controller 		controller;
 	private Configuration 	configuration;
 	private int 			xPx, yPx, thPx;
 	
-	public Cam(Controller controller) {
+	public Tracker(Controller controller) {
 		this.controller 	= controller;
 		this.configuration 	= this.controller.getConfiguration();
 		
@@ -120,8 +120,7 @@ public class Cam {
         frame.dispose();
     }
     
-    private double log(double base, double x)
-    {
-    	return Math.log( x ) / Math.log( base );
+    private double log(double base, double x) {
+    	return Math.log(x) / Math.log(base);
     }
 }

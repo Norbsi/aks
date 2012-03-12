@@ -2,7 +2,7 @@ package app;
 
 import java.util.Timer;
 
-import opencv.CamThread;
+import opencv.TrackerThread;
 import serialPort.ComMapper;
 import serialPort.SerialThread;
 import gui.Gui;
@@ -15,8 +15,8 @@ public class Controller {
 	private CamController	camController;
 	private Timer			timer;
 	private SerialThread	serialThread;
-	private CamThread		camThread;
-	private Thread			serialThreadInstance, camThreadInstance;
+	private TrackerThread	trackerThread;
+	private Thread			serialThreadInstance, trackerThreadInstance;
 	
     public static void main(String[] args) {
     	new Controller();
@@ -35,13 +35,14 @@ public class Controller {
     	this.roomState				= new RoomState();
 		
     	if (this.configuration.getCamOn()) {
-    		this.camThread			= new CamThread(this);
-    		this.camThreadInstance 	= new Thread(this.camThread);
-    		this.camThreadInstance.start();
+    		this.trackerThread			= new TrackerThread(this);
+    		this.trackerThreadInstance 	= new Thread(this.trackerThread);
+    		this.trackerThreadInstance.start();
     		this.camState.setCam(true);
     	}
     	
     	this.timer = new Timer();
+    	// TODO config?
 		this.timer.schedule(new StateTask(this), 0, 500);
     }
     

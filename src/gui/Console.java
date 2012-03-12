@@ -11,7 +11,7 @@ public class Console extends JScrollPane {
 	private static final long serialVersionUID = 6054449663806829875L;
 	private JTextArea textArea;
 	
-	public static Console Factory(Gui gui) {
+	public static Console factory(Gui gui) {
 		JTextArea textArea = new JTextArea();
 		return new Console(textArea, gui);
 	}

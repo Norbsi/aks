@@ -36,9 +36,9 @@ public class Gui {
 		
 		this.mainFrame.getContentPane().setLayout(new GridLayout(0, 3));
 		
-		this.console 	= Console.Factory(this);
-		this.send 		= Console.Factory(this);
-		this.receive 	= Console.Factory(this);
+		this.console 	= Console.factory(this);
+		this.send 		= Console.factory(this);
+		this.receive 	= Console.factory(this);
 
 		this.mainFrame.getContentPane().add(this.console);
 		this.mainFrame.getContentPane().add(this.receive);

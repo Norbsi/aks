@@ -2,16 +2,16 @@ package opencv;
 
 import app.Controller;
 
-public class CamThread implements Runnable {
+public class TrackerThread implements Runnable {
 	private Controller controller;
 	
-	public CamThread(Controller controller) {
+	public TrackerThread(Controller controller) {
 		this.controller = controller;
 	}
 
 	@Override
 	public void run() {
-		Cam cam = new Cam(this.controller);	
+		Tracker cam = new Tracker(this.controller);	
 		try {
 			cam.run();
 		} catch (Exception e) {
