@@ -1,4 +1,4 @@
-package serial;
+package serialPort;
 
 import javax.comm.*;
 

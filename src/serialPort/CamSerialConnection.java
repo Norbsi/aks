@@ -1,4 +1,4 @@
-package serial;
+package serialPort;
 
 import gnu.io.CommPortIdentifier;
 import gnu.io.CommPortOwnershipListener;

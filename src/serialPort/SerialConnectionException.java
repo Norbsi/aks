@@ -1,4 +1,4 @@
-package serial;
+package serialPort;
 
 public class SerialConnectionException extends Exception {
     /**

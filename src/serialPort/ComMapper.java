@@ -1,4 +1,4 @@
-package serial;
+package serialPort;
 
 import gnu.io.SerialPort;
 import app.Configuration;

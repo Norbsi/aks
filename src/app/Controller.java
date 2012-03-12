@@ -3,8 +3,8 @@ package app;
 import java.util.Timer;
 
 import opencv.CamThread;
-import serial.ComMapper;
-import serial.SerialThread;
+import serialPort.ComMapper;
+import serialPort.SerialThread;
 import gui.Gui;
 
 public class Controller {

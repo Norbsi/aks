@@ -1,4 +1,4 @@
-package serial;
+package serialPort;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
