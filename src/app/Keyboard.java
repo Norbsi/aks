@@ -21,34 +21,34 @@ public class Keyboard implements KeyListener {
 				System.exit(0);
 				break;
 			case KeyEvent.VK_S: 
-				gui.printConsole("UNTEN gedrückt");
+				gui.printConsole("UNTEN gedrÃ¼ckt");
 				this.controller.getSerial().send(1);
 				break;
 			case KeyEvent.VK_W: 
-				gui.printConsole("OBEN gedrückt");
+				gui.printConsole("OBEN gedrÃ¼ckt");
 				this.controller.getSerial().send(2);
 				break;
 			case KeyEvent.VK_A: 
-				gui.printConsole("LINKS gedrückt");
+				gui.printConsole("LINKS gedrÃ¼ckt");
 				this.controller.getSerial().send(this.controller.getCamState().getCamPosX()-50);
 				this.controller.getRoomState().reset();
 				break;
 			case KeyEvent.VK_D: 
-				gui.printConsole("RECHTS gedrückt");
+				gui.printConsole("RECHTS gedrÃ¼ckt");
 				this.controller.getSerial().send(this.controller.getCamState().getCamPosX()+50);
 				this.controller.getRoomState().reset();
 				break;
 			case KeyEvent.VK_SPACE: 
-				gui.printConsole("ZENTRIEREN gedrückt");
+				gui.printConsole("ZENTRIEREN gedrÃ¼ckt");
 				this.controller.getSerial().send(0);
 				this.controller.getRoomState().reset();
 				break;
 			case KeyEvent.VK_E: 
-				gui.printConsole("e (100) gedrückt");
+				gui.printConsole("e (100) gedrÃ¼ckt");
 				this.controller.getSerial().send(100);
 				break;
 			case KeyEvent.VK_Q: 
-				gui.printConsole("q (-200) gedrückt");
+				gui.printConsole("q (-200) gedrÃ¼ckt");
 				this.controller.getSerial().send(-200);
 				break;
 			default:

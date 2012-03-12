@@ -30,7 +30,7 @@ public class CamController {
         double cY 		= y + height/2;
         
         // DIFFERENT X&Y AXIS !!!!!!!!!
-        // convert to cam specific angles (65.368°x58.517°)
+        // convert to cam specific angles (65.368ï¿½x58.517ï¿½)
         double relCX 	= this.getCamPosRad() + (cX - 0.5) * Math.toRadians(65.368);
         double relCY 	= (cY - 0.5) * Math.toRadians(-58.517);
 
@@ -40,7 +40,7 @@ public class CamController {
     	double absCZ 	= dist * Math.sin(relCY);
     	
     	this.controller.getGui().printConsole(
-			"Körper gefunden: x:" +
+			"KÃ¶rper gefunden: x:" +
 			df.format(absCX) + "m y:" +
 			df.format(absCY) + "m z:" +
 			df.format(absCZ) + "m"
