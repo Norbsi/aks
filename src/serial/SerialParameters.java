@@ -15,21 +15,6 @@ public class SerialParameters {
     private int 	parity;
 
     /**
-    Default constructer. Sets parameters to no port, 9600 baud, no flow 
-    control, 8 data bits, 1 stop bit, no parity.
-    */
-    public SerialParameters () {
-		this("", 
-		     115200, 
-		     SerialPort.FLOWCONTROL_NONE,
-		     SerialPort.FLOWCONTROL_NONE,
-		     SerialPort.DATABITS_8,
-		     SerialPort.STOPBITS_1,
-		     SerialPort.PARITY_NONE
-		 );	
-    }
-
-    /**
     Paramaterized constructer.
 
     @param portName The name of the port.

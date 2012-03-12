@@ -9,10 +9,12 @@ public class ComMapper {
 	SerialParameters 	params;
 	CamSerialConnection sconn;
 	Configuration		configuration;
+	Parser				parser;
 	
 	public ComMapper(Controller controller) {
 		this.controller 	= controller;
 		this.configuration 	= this.controller.getConfiguration();
+		this.parser			= new Parser(this.controller);
 		
 		this.params = new SerialParameters(
 			this.configuration.getPort(),
@@ -36,11 +38,11 @@ public class ComMapper {
 		}
 	}
 	
-	public void knock() {
-		this.sconn.knock();
-	}
-	
 	public void send(int input) {
 		this.sconn.send(input);
+	}
+	
+	public Parser getParser() {
+		return this.parser;
 	}
 }

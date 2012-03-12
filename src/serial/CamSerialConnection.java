@@ -243,7 +243,7 @@ public class CamSerialConnection implements SerialPortEventListener, CommPortOwn
 	
 				// Append received data to messageAreaIn.
 			   	this.gui.printReceive(new String(inputBuffer));
-			  	this.controller.getParser().process(new String(inputBuffer));
+			  	this.controller.getSerial().getParser().process(new String(inputBuffer));
 			break;
 	
 		    // If break event append BREAK RECEIVED message.
