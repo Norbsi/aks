@@ -4,19 +4,23 @@ import java.text.DecimalFormat;
 
 public class CamController {
 	private Controller 		controller;
-	private double 			maxVelocity, minHeight, moveThreshold;
+	private double 			maxVelocity, minHeight, moveThreshold, camFOVX, camFOVY;
 	private DecimalFormat 	df = new DecimalFormat("#.##");
 	private int				maxCamPos, maxCamAngle, bodyThreshold;
 	
 	public CamController(Controller controller) {
-		this.controller 	= controller;
+		this.controller 			= controller;
 		
-		this.maxCamPos 		= this.controller.getConfiguration().getMaxCamPos();
-		this.maxCamAngle	= this.controller.getConfiguration().getMaxCamAngle();
-		this.maxVelocity	= this.controller.getConfiguration().getMaxVelocity();
-		this.minHeight		= this.controller.getConfiguration().getMinHeight();
-		this.moveThreshold	= Math.toRadians(this.controller.getConfiguration().getMoveThreshold());
-		this.bodyThreshold	= this.controller.getConfiguration().getBodyThreshold();
+		Configuration configuration	= this.controller.getConfiguration();
+		
+		this.maxCamPos 				= configuration.getMaxCamPos();
+		this.maxCamAngle			= configuration.getMaxCamAngle();
+		this.maxVelocity			= configuration.getMaxVelocity();
+		this.minHeight				= configuration.getMinHeight();
+		this.moveThreshold			= Math.toRadians(configuration.getMoveThreshold());
+		this.bodyThreshold			= configuration.getBodyThreshold();
+		this.camFOVX				= configuration.getCamFOVX();
+		this.camFOVY				= configuration.getCamFOVY();
 	}
 	
 	private double getCamPosRad() {
@@ -30,9 +34,9 @@ public class CamController {
         double cY 		= y + height/2;
         
         // DIFFERENT X&Y AXIS !!!!!!!!!
-        // convert to cam specific angles (65.368�x58.517�)
-        double relCX 	= this.getCamPosRad() + (cX - 0.5) * Math.toRadians(65.368);
-        double relCY 	= (cY - 0.5) * Math.toRadians(-58.517);
+        // convert to cam specific angles
+        double relCX 	= this.getCamPosRad() + (cX - 0.5) * Math.toRadians(this.camFOVX);
+        double relCY 	= (cY - 0.5) * Math.toRadians(-this.camFOVY);
 
         // convert to absolute pos
     	double absCX 	= dist * Math.sin(relCX);

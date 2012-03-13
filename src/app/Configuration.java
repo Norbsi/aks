@@ -13,7 +13,7 @@ public class Configuration {
 	private 				int		baud, yres, deviceid, detectBonus, decay, decayTime, maxCamPos, maxCamAngle, moveThreshold, bodyThreshold;
 	private 				String	port;
 	private					boolean camOn;
-	private					float	maxVelocity, minHeight;
+	private					double	maxVelocity, minHeight, camFOVX, camFOVY;
 	
 	private transient final	File 	inifile = new File("config.ini");
 	private transient 		Ini 	ini;
@@ -29,12 +29,14 @@ public class Configuration {
 		this.deviceid			= Integer.parseInt(this.ini.get("cam", "deviceid"));
 		this.maxCamPos			= Integer.parseInt(this.ini.get("cam", "maxcampos"));
 		this.maxCamAngle		= Integer.parseInt(this.ini.get("cam", "maxcamangle"));
+		this.camFOVX			= Double.parseDouble(this.ini.get("cam", "fovx"));
+		this.camFOVY			= Double.parseDouble(this.ini.get("cam", "fovy"));
 		
 		this.detectBonus		= Integer.parseInt(this.ini.get("algorithm", "detectbonus"));
 		this.decay				= Integer.parseInt(this.ini.get("algorithm", "decay"));
 		this.decayTime			= Integer.parseInt(this.ini.get("algorithm", "decaytime"));
-		this.maxVelocity		= Float.parseFloat(this.ini.get("algorithm", "maxvelocity"));
-		this.minHeight			= Float.parseFloat(this.ini.get("algorithm", "minheight"));
+		this.maxVelocity		= Double.parseDouble(this.ini.get("algorithm", "maxvelocity"));
+		this.minHeight			= Double.parseDouble(this.ini.get("algorithm", "minheight"));
 		this.moveThreshold		= Integer.parseInt(this.ini.get("algorithm", "movethreshold"));
 		this.bodyThreshold		= Integer.parseInt(this.ini.get("algorithm", "bodythreshold"));
 	}
@@ -87,23 +89,18 @@ public class Configuration {
 	public int getBaud() {
 		return this.baud;
 	}
-	
 	public String getPort() {
 		return this.port;
 	}
-
 	public int getYres() {
 		return this.yres;
 	}
-
 	public int getDeviceId() {
 		return this.deviceid;
 	}
-	
 	public boolean getCamOn() {
 		return this.camOn;
-	}
-	
+	}	
 	public int getDetectBonus() {
 		return this.detectBonus;
 	}
@@ -119,10 +116,10 @@ public class Configuration {
 	public int getMaxCamAngle() {
 		return this.maxCamAngle;
 	}
-	public float getMaxVelocity() {
+	public double getMaxVelocity() {
 		return this.maxVelocity;
 	}
-	public float getMinHeight() {
+	public double getMinHeight() {
 		return this.minHeight;
 	}
 	public int getMoveThreshold() {
@@ -130,5 +127,11 @@ public class Configuration {
 	}
 	public int getBodyThreshold() {
 		return this.bodyThreshold;
+	}
+	public double getCamFOVX() {
+		return this.camFOVX;
+	}
+	public double getCamFOVY() {
+		return this.camFOVY;
 	}
 }

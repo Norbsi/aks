@@ -38,6 +38,7 @@ public class Map extends JComponent {
 			
 			g.setColor(Color.DARK_GRAY);
 			// 90->start angle (north), 30->half field of view
+			// TODO 30-60->device specific angles
 			g.fillArc(-width/2, -height/2, width*2, height*2, 90 + 30 - (int) camPosAngle, -60);
 			g.setColor(Color.GRAY);
 			g.fillArc(-width/2, -height/2, width*2, height*2, 90 + this.moveThreshold/2 - (int) camPosAngle, -this.moveThreshold);
