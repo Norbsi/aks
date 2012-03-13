@@ -37,6 +37,7 @@ public class Map extends JComponent {
 				
 		if (this.controller.getCamState() != null) {
 			double camPos		= this.controller.getCamState().getCamPosX();
+			// TODO 45?
 			double camPosAngle	= camPos * 45 / this.maxCamPos;
 			
 			g.setColor(Color.DARK_GRAY);
@@ -50,5 +51,5 @@ public class Map extends JComponent {
 	    		if (body.getProbability() >= this.bodyThreshold) g.fillOval((int) (body.getX()/14 * width) + width/2, (int) (body.getY()/14 * -width) + height/2, width / 40, height / 40);
 	    	}
 		}
-     }
+    }
 }
