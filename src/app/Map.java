@@ -11,15 +11,18 @@ public class Map extends JComponent {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -8929711985144231275L;
-	private Controller 	controller;
-	private int			maxCamPos, moveThreshold, bodyThreshold;	
+	private static final long 	serialVersionUID = -8929711985144231275L;
+	private Controller 			controller;
+	private int					maxCamPos, moveThreshold, bodyThreshold, camFOVX;
 	
 	public Map(Controller controller) {
-		this.controller 	= controller;
-		this.maxCamPos 		= this.controller.getConfiguration().getMaxCamPos();
-		this.moveThreshold	= this.controller.getConfiguration().getMoveThreshold();
-		this.bodyThreshold	= this.controller.getConfiguration().getBodyThreshold();
+		this.controller 			= controller;
+		Configuration configuration = this.controller.getConfiguration();
+		
+		this.maxCamPos 				= configuration.getMaxCamPos();
+		this.moveThreshold			= configuration.getMoveThreshold();
+		this.bodyThreshold			= configuration.getBodyThreshold();
+		this.camFOVX				= (int) Math.round(configuration.getCamFOVX());
 	}
 	
     public void paint(Graphics gg) {
@@ -37,9 +40,8 @@ public class Map extends JComponent {
 			double camPosAngle	= camPos * 45 / this.maxCamPos;
 			
 			g.setColor(Color.DARK_GRAY);
-			// 90->start angle (north), 30->half field of view
-			// TODO 30-60->device specific angles
-			g.fillArc(-width/2, -height/2, width*2, height*2, 90 + 30 - (int) camPosAngle, -60);
+			// 90->start angle (north)
+			g.fillArc(-width/2, -height/2, width*2, height*2, 90 + (this.camFOVX/2) - (int) camPosAngle, -this.camFOVX);
 			g.setColor(Color.GRAY);
 			g.fillArc(-width/2, -height/2, width*2, height*2, 90 + this.moveThreshold/2 - (int) camPosAngle, -this.moveThreshold);
 			
