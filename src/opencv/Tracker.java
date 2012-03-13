@@ -35,45 +35,32 @@ public class Tracker {
         // Preload the opencv_objdetect module to work around a known bug.
         Loader.load(opencv_objdetect.class);
 
-        // We can "cast" Pointer objects by instantiating a new object of the desired class.
         CvHaarClassifierCascade classifier = new CvHaarClassifierCascade(cvLoad(classifierName));
         if (classifier.isNull()) {
             System.err.println("Error loading classifier file \"" + classifierName + "\".");
             System.exit(1);
         }
 
-        // CanvasFrame is a JFrame containing a Canvas component, which is hardware accelerated.
-        // It can also switch into full-screen mode when called with a screenNumber.
         CanvasFrame frame = new CanvasFrame("Kamera Feed");
         frame.setCanvasSize(160, 120);
-        
         frame.addKeyListener(this.controller.getGui().getKeyboard());
 
-        // OpenCVFrameGrabber uses opencv_highgui, but other more versatile FrameGrabbers
-        // include DC1394FrameGrabber, FlyCaptureFrameGrabber, OpenKinectFrameGrabber,
+        // TODO try different framegrabbers
+        // DC1394FrameGrabber, FlyCaptureFrameGrabber, OpenKinectFrameGrabber,
         // VideoInputFrameGrabber, and FFmpegFrameGrabber.
         FrameGrabber grabber = new OpenCVFrameGrabber(this.configuration.getDeviceId());
         grabber.setImageHeight(this.yPx);
         grabber.setImageWidth(this.xPx);
         grabber.start();
 
-        // FAQ about IplImage:
-        // - For custom raw processing of data, getByteBuffer() returns an NIO direct
-        //   buffer wrapped around the memory pointed by imageData.
-        // - To get a BufferedImage from an IplImage, you may call getBufferedImage().
-        // - The createFrom() factory method can construct an IplImage from a BufferedImage.
-        // - There are also a few copy*() methods for BufferedImage<->IplImage data transfers.
         IplImage 	grabbedImage 	= grabber.grab();
         int 		imageWidth  	= grabbedImage.width();
         int 		imageHeight 	= grabbedImage.height();
         IplImage 	grayImage    	= IplImage.create(imageWidth, imageHeight, IPL_DEPTH_8U, 1);
 
-        // Objects allocated with a create*() or clone() factory method are automatically released
-        // by the garbage collector, but may still be explicitly released by calling release().
         CvMemStorage storage = CvMemStorage.create();
 
         while (frame.isVisible() && (grabbedImage = grabber.grab()) != null) {
-            // Let's try to detect some faces! but we need a grayscale image...
             cvCvtColor(grabbedImage, grayImage, CV_BGR2GRAY);
             CvSeq 	faces 	= cvHaarDetectObjects(grayImage, classifier, storage, 1.1, 3, CV_HAAR_DO_CANNY_PRUNING);
             int 	total 	= faces.total();
