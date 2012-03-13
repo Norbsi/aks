@@ -4,7 +4,7 @@ import java.text.DecimalFormat;
 
 public class CamController {
 	private Controller 		controller;
-	private double 			maxVelocity, minHeight, moveThreshold, camFOVX, camFOVY;
+	private double 			maxVelocity, minHeight, moveThreshold, camFOVX, camFOVY, r90;
 	private DecimalFormat 	df = new DecimalFormat("#.##");
 	private int				maxCamPos, maxCamAngle, bodyThreshold;
 	
@@ -21,6 +21,8 @@ public class CamController {
 		this.bodyThreshold			= configuration.getBodyThreshold();
 		this.camFOVX				= configuration.getCamFOVX();
 		this.camFOVY				= configuration.getCamFOVY();
+		
+		this.r90					= Math.toRadians(90);
 	}
 	
 	private double getCamPosRad() {
@@ -77,6 +79,21 @@ public class CamController {
 	    	this.focus();
     	}
 	}
+	
+	public void motionDetected(double cX, double cY, double area) {
+        // DIFFERENT X&Y AXIS !!!!!!!!!
+        // convert to cam specific angles
+        double mX = this.getCamPosRad() + (cX - 0.5) * Math.toRadians(this.camFOVX);
+        double mY = (cY - 0.5) * Math.toRadians(-this.camFOVY);
+        
+        for (Body candidate : this.controller.getRoomState().getBodyList()) {
+        	double bX = Math.atan(candidate.getX()/candidate.getY());
+        	double bY = Math.atan(candidate.getZ()/candidate.getY());
+        	
+        	double angDist = Math.acos(Math.cos(this.r90-mY) * Math.cos(this.r90-bY) + Math.sin(this.r90-mY) * Math.sin(this.r90-bY) * Math.cos(mX-bX));
+        }
+	}
+        
 	
 	private void focus() {
 		Body masterBody = null;

@@ -123,6 +123,12 @@ public class Tracker {
                             CvPoint2D32f 	center 	= box.center();
                             CvSize2D32f 	size 	= box.size();
 
+                            this.controller.getCamController().motionDetected(
+                            	(center.x()/ (double) this.xPx),
+                            	(center.y()/ (double) this.yPx),
+                            	size.width() * size.height()
+                            );
+                            
                             cvRectangle(
                             	grabbedImage,
                             	cvPoint((int) Math.round(center.x()-(size.width()/2)), (int) Math.round(center.y()-(size.height()/2))),
