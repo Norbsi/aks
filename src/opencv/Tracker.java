@@ -6,7 +6,13 @@ import app.Controller;
 import com.googlecode.javacpp.Loader;
 import com.googlecode.javacv.*;
 import com.googlecode.javacv.cpp.*;
+import com.googlecode.javacv.cpp.opencv_core.CvBox2D;
+import com.googlecode.javacv.cpp.opencv_core.CvContour;
+import com.googlecode.javacv.cpp.opencv_core.CvPoint2D32f;
 import com.googlecode.javacv.cpp.opencv_core.CvScalar;
+import com.googlecode.javacv.cpp.opencv_core.CvSeq;
+import com.googlecode.javacv.cpp.opencv_core.CvSize2D32f;
+import com.googlecode.javacv.cpp.opencv_core.IplImage;
 
 import static com.googlecode.javacv.cpp.opencv_core.*;
 import static com.googlecode.javacv.cpp.opencv_imgproc.*;
@@ -42,7 +48,7 @@ public class Tracker {
         }
 
         CanvasFrame frame = new CanvasFrame("Kamera Feed");
-        frame.setCanvasSize(160, 120);
+        frame.setCanvasSize(this.xPx, this.yPx);
         frame.addKeyListener(this.controller.getGui().getKeyboard());
 
         // TODO try different framegrabbers
@@ -54,13 +60,24 @@ public class Tracker {
         grabber.start();
 
         IplImage 	grabbedImage 	= grabber.grab();
-        int 		imageWidth  	= grabbedImage.width();
-        int 		imageHeight 	= grabbedImage.height();
-        IplImage 	grayImage    	= IplImage.create(imageWidth, imageHeight, IPL_DEPTH_8U, 1);
+        IplImage 	grayImage    	= null;
+        IplImage 	smoothGray		= null;
+        IplImage 	prevImage		= null;
+        IplImage	diff			= null;
 
         CvMemStorage storage = CvMemStorage.create();
 
         while (frame.isVisible() && (grabbedImage = grabber.grab()) != null) {
+        	prevImage 	= smoothGray;
+        	grayImage 	= IplImage.create(this.xPx, this.yPx, IPL_DEPTH_8U, 1);
+        	cvCvtColor(grabbedImage, grayImage, CV_RGB2GRAY);
+        	smoothGray 	= IplImage.create(this.xPx, this.yPx, IPL_DEPTH_8U, 1);
+        	cvSmooth(grayImage, smoothGray, CV_GAUSSIAN, 9, 9, 0.1, 0.1);            
+
+            if (diff == null) {
+                diff = IplImage.create(this.xPx, this.yPx, IPL_DEPTH_8U, 1);
+            }
+
             cvCvtColor(grabbedImage, grayImage, CV_BGR2GRAY);
             CvSeq 	faces 	= cvHaarDetectObjects(grayImage, classifier, storage, 1.1, 3, CV_HAAR_DO_CANNY_PRUNING);
             int 	total 	= faces.total();
@@ -84,17 +101,41 @@ public class Tracker {
                     
                     cvRectangle(
                     	grabbedImage,
-                    	cvPoint(
-                    		r.x(),
-                    		r.y()
-                    	),
-                    	cvPoint(
-                    		r.x() + r.width(),
-                    		r.y() + r.height()
-                    	),
+                    	cvPoint(r.x(), r.y()),
+                    	cvPoint(r.x() + r.width(), r.y() + r.height()),
                     	CvScalar.RED, 1, CV_AA, 0
                     );
         		}
+            }
+            
+            if (prevImage != null) {
+                // perform ABS difference
+                cvAbsDiff(smoothGray, prevImage, diff);
+                // do some threshold for wipe away useless details
+                cvThreshold(diff, diff, 70, 255, CV_THRESH_BINARY);
+
+                // recognize contours
+                CvSeq contour = new CvSeq(null);
+                cvFindContours(diff, storage, contour, Loader.sizeof(CvContour.class), CV_RETR_LIST, CV_CHAIN_APPROX_SIMPLE);
+                
+                while (contour != null && !contour.isNull()) {
+                    if (contour.elem_size() > 0) {
+                        CvBox2D box = cvMinAreaRect2(contour, storage);
+                        // test intersection
+                        if (box != null) {
+                            CvPoint2D32f 	center 	= box.center();
+                            CvSize2D32f 	size 	= box.size();
+
+                            cvRectangle(
+                            	grabbedImage,
+                            	cvPoint((int) Math.round(center.x()-(size.width()/2)), (int) Math.round(center.y()-(size.height()/2))),
+                            	cvPoint((int) Math.round(center.x()+(size.width()/2)), (int) Math.round(center.y()+(size.height()/2))),
+                            	CvScalar.WHITE, 1, CV_AA, 0
+                            );
+	                    }
+	                    contour = contour.h_next();
+                    }
+                }                
             }
             
             cvLine(grabbedImage, cvPoint(this.thPx, 0), cvPoint(this.thPx, this.yPx), CvScalar.GREEN, 1, CV_AA, 0);
