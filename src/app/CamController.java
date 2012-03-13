@@ -28,7 +28,7 @@ public class CamController {
 		return (camPos / this.maxCamPos) * Math.toRadians(this.maxCamAngle);
 	}
 	
-	public void bodyFound(double x, double y, double width, double height, double dist) {
+	public void bodyDetected(double x, double y, double width, double height, double dist) {
 		// calculate body-center pos (image) x,y 0..1
         double cX 		= x + width/2;
         double cY 		= y + height/2;

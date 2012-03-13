@@ -91,7 +91,7 @@ public class Tracker {
                 double dist = this.log(0.45, dia - 42) + 6.6;
                 
         		if (dist > 0) {
-                    this.controller.getCamController().bodyFound(
+                    this.controller.getCamController().bodyDetected(
                     	(x/ (double) this.xPx),
                     	(y/ (double) this.yPx),
                     	(width/ (double) this.xPx),
@@ -109,19 +109,16 @@ public class Tracker {
             }
             
             if (prevImage != null) {
-                // perform ABS difference
                 cvAbsDiff(smoothGray, prevImage, diff);
-                // do some threshold for wipe away useless details
                 cvThreshold(diff, diff, 70, 255, CV_THRESH_BINARY);
 
-                // recognize contours
                 CvSeq contour = new CvSeq(null);
                 cvFindContours(diff, storage, contour, Loader.sizeof(CvContour.class), CV_RETR_LIST, CV_CHAIN_APPROX_SIMPLE);
                 
                 while (contour != null && !contour.isNull()) {
                     if (contour.elem_size() > 0) {
                         CvBox2D box = cvMinAreaRect2(contour, storage);
-                        // test intersection
+                        
                         if (box != null) {
                             CvPoint2D32f 	center 	= box.center();
                             CvSize2D32f 	size 	= box.size();
