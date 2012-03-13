@@ -46,14 +46,11 @@ public class Configuration {
 			try {
 				this.ini = new Ini(this.inifile);
 			} catch (InvalidFileFormatException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.out.println("Config.ini Fehler");
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.out.println("Config.ini Fehler");
 			}
 		} else {
-			// TODO log
 			try {
 				this.createIniFile();
 			} catch (IOException e) {
