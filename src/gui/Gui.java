@@ -18,6 +18,7 @@ public class Gui {
 	private Keyboard 		keyboard;
 	private JTextArea		camState, roomState;
 	private Map				map;
+	private boolean			paused;
 	
 	/**
 	 * Create the application.
@@ -61,16 +62,20 @@ public class Gui {
 		this.receive.clear();
 	}
 	
+	public void pauseConsole() {
+		this.paused = !this.paused;
+	}
+	
 	public void printConsole(String text) {
-		this.console.append(text);
+		if (!this.paused) this.console.append(text);
 	}
 	
 	public void printSend(String text) {
-		this.send.append(text);
+		if (!this.paused) this.send.append(text);
 	}
 	
 	public void printReceive(String text) {
-		this.receive.append(text);
+		if (!this.paused) this.receive.append(text);
 	}
 	
 	public void updateCamState(CamState camState) {

@@ -54,6 +54,9 @@ public class Keyboard implements KeyListener {
 			case KeyEvent.VK_DELETE: 
 				gui.clearConsole();
 				break;
+			case KeyEvent.VK_P: 
+				gui.pauseConsole();
+				break;
 			default:
 		}
 	}
