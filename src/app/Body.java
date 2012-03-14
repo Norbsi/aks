@@ -3,10 +3,10 @@ package app;
 import java.util.Date;
 
 public class Body {
-	private double 		x, y, z;
-	private int			probability;
-	private Date		lastSeen;
-	private Controller 	controller;
+	private double 			x, y, z;
+	private int				probability;
+	private Date			lastSeen;
+	private Controller 		controller;
 	
 	public Body(double x, double y, double z, Controller controller) {
 		this.controller		= controller;
@@ -47,7 +47,9 @@ public class Body {
 	public double getZ() {
 		return this.z;
 	}
-	
+	public double getDistance() {
+		return Math.sqrt(Math.pow(this.x,2) + Math.pow(this.y, 2));
+	}
 	public int getProbability() {
 		return this.probability;
 	}
@@ -61,5 +63,9 @@ public class Body {
 	
 	public void decay() {
 		this.addProbability(-this.controller.getConfiguration().getDecay());
+	}
+	
+	public void moved(Point2D p) {
+		this.addProbability(1);
 	}
 }
