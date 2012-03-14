@@ -65,6 +65,7 @@ public class Body {
 	}
 	
 	public void moved(Point2D p) {
-		this.addProbability(0.1);
+		// TODO config
+		this.addProbability(0.05);
 	}
 }

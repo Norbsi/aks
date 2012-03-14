@@ -24,7 +24,7 @@ public class RoomState {
 	public String toString() {
 		String out = "";
 		for (Body body : this.bodyList) {
-			out += 	"%:" + body.getProbability() + 
+			out += 	"%:" + df.format(body.getProbability()) + 
 					" x:" + df.format(body.getX()) +
 					"m y:" + df.format(body.getY()) +
 					"m z:" + df.format(body.getZ()) + "m\n";

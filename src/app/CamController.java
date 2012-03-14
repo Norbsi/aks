@@ -85,8 +85,10 @@ public class CamController {
        
         	double bDist	= candidate.getDistance();
         	
+        	// TODO proper size calculation
         	if ( (angDist / Math.pow(bDist, 0.45)) < 0.2 ) {
         		candidate.moved(motion);
+        		this.controller.getGui().printConsole("Bewegung erkannt (" + candidate.getX() + ", " + candidate.getY() + ", " +  candidate.getZ() + ")");
         	}
         }
 	}
