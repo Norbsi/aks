@@ -89,7 +89,7 @@ public class CamController {
         	// TODO proper size calculation
         	if ( (angDist / Math.pow(bDist, 0.45)) < 0.2 ) {
         		candidate.moved(motion);
-        		this.controller.getGui().printConsole("Bewegung erkannt (" + candidate.getX() + ", " + candidate.getY() + ", " +  candidate.getZ() + ")");
+        		this.controller.getGui().printConsole("Bewegung erkannt (" + df.format(candidate.getX()) + ", " + df.format(candidate.getY()) + ", " +  df.format(candidate.getZ()) + ")");
         	}
         }
         this.controller.getRoomState().lock(false);

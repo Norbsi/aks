@@ -6,11 +6,11 @@ import java.util.List;
 
 public class RoomState {
 	private List<Body> 		bodyList;
-	private	DecimalFormat 	df = new DecimalFormat("#.##");
-	private boolean			lock = false;
+	private	DecimalFormat 	df 		= new DecimalFormat("#.##");
+	private boolean			lock 	= false;
 
 	public RoomState() {
-		this.bodyList 	= new LinkedList<Body>();
+		this.bodyList = new LinkedList<Body>();
 	}
 	
 	public List<Body> getBodyList() {
