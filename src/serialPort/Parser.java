@@ -27,5 +27,19 @@ public class Parser {
 			System.out.println(pos);
 			this.controller.getCamState().setCamPosY(Integer.parseInt(pos));
 		}
+		pat = Pattern.compile("SpeedX: ([-]?\\d+)");
+		match = pat.matcher(in);
+		while (match.find()) {
+			pos = match.group(1);
+			System.out.println(pos);
+			this.controller.getCamState().setCamSpeedX(Integer.parseInt(pos));
+		}
+		pat = Pattern.compile("SpeedY: ([-]?\\d+)");
+		match = pat.matcher(in);
+		while (match.find()) {
+			pos = match.group(1);
+			System.out.println(pos);
+			this.controller.getCamState().setCamSpeedY(Integer.parseInt(pos));
+		}
 	}
 }
