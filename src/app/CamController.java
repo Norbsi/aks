@@ -78,13 +78,13 @@ public class CamController {
         
         for (Body candidate : this.controller.getRoomState().getBodyList()) {
         	Point2D bodyAng = new Point2D();
-        	
         	bodyAng.x		= Math.atan(candidate.getX()/candidate.getY());
         	bodyAng.y		= Math.atan(candidate.getZ()/candidate.getY());
-        	
+        	   	
+        	double angDist 	= this.angularDistance(motion, bodyAng);
+       
         	double bDist	= candidate.getDistance();
-        	double angDist 	= Math.acos(Math.cos(this.r90-motion.y) * Math.cos(this.r90-bodyAng.y) + Math.sin(this.r90-motion.y) * Math.sin(this.r90-bodyAng.y) * Math.cos(motion.x-bodyAng.x));
-
+        	
         	if ( (angDist / Math.pow(bDist, 0.45)) < 0.2 ) {
         		candidate.moved(motion);
         	}
@@ -109,6 +109,10 @@ public class CamController {
 		cartesian.z	= dist * Math.sin(absPos.y);
 		
 		return cartesian;
+	}
+	
+	private double angularDistance(Point2D p1, Point2D p2) {
+		return Math.acos(Math.cos(this.r90-p1.y) * Math.cos(this.r90-p2.y) + Math.sin(this.r90-p1.y) * Math.sin(this.r90-p2.y) * Math.cos(p1.x-p2.x));
 	}
 	
 	private void focus() {
