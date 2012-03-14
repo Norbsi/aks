@@ -29,4 +29,8 @@ public class Console extends JScrollPane {
 		this.textArea.append(text + "\n");
 		this.textArea.setCaretPosition(this.textArea.getText().length());
 	}
+	
+	public void clear() {
+		this.textArea.setText("");
+	}
 }

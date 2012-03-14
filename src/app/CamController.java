@@ -76,6 +76,7 @@ public class CamController {
 	public void motionDetected(double cX, double cY, double area) {
 		Point2D motion = this.camPosToAbsPos(new Point2D(cX, cY));
         
+		this.controller.getRoomState().lock(true);
         for (Body candidate : this.controller.getRoomState().getBodyList()) {
         	Point2D bodyAng = new Point2D();
         	bodyAng.x		= Math.atan(candidate.getX()/candidate.getY());
@@ -91,6 +92,7 @@ public class CamController {
         		this.controller.getGui().printConsole("Bewegung erkannt (" + candidate.getX() + ", " + candidate.getY() + ", " +  candidate.getZ() + ")");
         	}
         }
+        this.controller.getRoomState().lock(false);
 	}
 	
 	private Point2D camPosToAbsPos(Point2D camPos) {

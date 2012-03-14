@@ -53,7 +53,13 @@ public class Gui {
 		this.mainFrame.setMinimumSize(new Dimension(800,400));
 		this.mainFrame.pack();
 		this.mainFrame.setVisible(true);
-	}	
+	}
+	
+	public void clearConsole() {
+		this.console.clear();
+		this.send.clear();
+		this.receive.clear();
+	}
 	
 	public void printConsole(String text) {
 		this.console.append(text);

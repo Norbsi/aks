@@ -51,6 +51,9 @@ public class Keyboard implements KeyListener {
 				gui.printConsole("q (-200) gedrückt");
 				this.controller.getSerial().send(-200);
 				break;
+			case KeyEvent.VK_DELETE: 
+				gui.clearConsole();
+				break;
 			default:
 		}
 	}
