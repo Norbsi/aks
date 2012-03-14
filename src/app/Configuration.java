@@ -10,10 +10,10 @@ import org.ini4j.Ini;
 import org.ini4j.InvalidFileFormatException;
 
 public class Configuration {
-	private 				int		baud, yres, deviceid, detectBonus, decay, decayTime, maxCamPos, maxCamAngle, moveThreshold, bodyThreshold;
+	private 				int		baud, yres, deviceid, decay, decayTime, maxCamPos, maxCamAngle, moveThreshold, bodyThreshold;
 	private 				String	port;
 	private					boolean camOn;
-	private					double	maxVelocity, minHeight, camFOVX, camFOVY;
+	private					double	maxVelocity, minHeight, camFOVX, camFOVY, detectBonus;
 	
 	private transient final	File 	inifile = new File("config.ini");
 	private transient 		Ini 	ini;
@@ -32,7 +32,7 @@ public class Configuration {
 		this.camFOVX			= Double.parseDouble(this.ini.get("cam", "fovx"));
 		this.camFOVY			= Double.parseDouble(this.ini.get("cam", "fovy"));
 		
-		this.detectBonus		= Integer.parseInt(this.ini.get("algorithm", "detectbonus"));
+		this.detectBonus		= Double.parseDouble(this.ini.get("algorithm", "detectbonus"));
 		this.decay				= Integer.parseInt(this.ini.get("algorithm", "decay"));
 		this.decayTime			= Integer.parseInt(this.ini.get("algorithm", "decaytime"));
 		this.maxVelocity		= Double.parseDouble(this.ini.get("algorithm", "maxvelocity"));
@@ -98,7 +98,7 @@ public class Configuration {
 	public boolean getCamOn() {
 		return this.camOn;
 	}	
-	public int getDetectBonus() {
+	public double getDetectBonus() {
 		return this.detectBonus;
 	}
 	public int getDecay() {

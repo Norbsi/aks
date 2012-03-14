@@ -3,8 +3,7 @@ package app;
 import java.util.Date;
 
 public class Body {
-	private double 			x, y, z;
-	private int				probability;
+	private double 			x, y, z, probability;
 	private Date			lastSeen;
 	private Controller 		controller;
 	
@@ -50,11 +49,11 @@ public class Body {
 	public double getDistance() {
 		return Math.sqrt(Math.pow(this.x,2) + Math.pow(this.y, 2));
 	}
-	public int getProbability() {
+	public double getProbability() {
 		return this.probability;
 	}
 	
-	private void addProbability(int added) {
+	private void addProbability(double added) {
 		this.probability += added;
 		
 		if (this.probability > 100) this.probability = 100;
@@ -66,6 +65,6 @@ public class Body {
 	}
 	
 	public void moved(Point2D p) {
-		this.addProbability(1);
+		this.addProbability(0.1);
 	}
 }
