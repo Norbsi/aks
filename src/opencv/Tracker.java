@@ -79,30 +79,27 @@ public class Tracker {
             }
 
             cvCvtColor(grabbedImage, grayImage, CV_BGR2GRAY);
-            CvSeq 	faces 	= cvHaarDetectObjects(grayImage, classifier, storage, 1.1, 3, CV_HAAR_DO_CANNY_PRUNING);
-            int 	total 	= faces.total();
+            CvSeq bodies = cvHaarDetectObjects(grayImage, classifier, storage, 1.1, 3, CV_HAAR_DO_CANNY_PRUNING);
             
-            for (int i = 0; i < total; i++) {
-                CvRect r = new CvRect(cvGetSeqElem(faces, i));
-               
-    			double x = r.x(), y = r.y(), width = r.width(), height = r.height();
+            for (int i = 0; i < bodies.total(); i++) {
+                CvRect rect 	= new CvRect(cvGetSeqElem(bodies, i));
                 
-                double dia = Math.sqrt((width * width) + (height * height));
-                double dist = this.log(0.45, dia - 42) + 6.6;
+                double diagonal = Math.sqrt((Math.pow((double) rect.width(), 2)) + (Math.pow((double) rect.height(), 2)));
+                double distance	= this.log(0.45, diagonal - 42) + 6.6;
                 
-        		if (dist > 0) {
+        		if (distance > 0) {
                     this.controller.getCamController().bodyDetected(
-                    	(x/ (double) this.xPx),
-                    	(y/ (double) this.yPx),
-                    	(width/ (double) this.xPx),
-                    	(height/ (double) this.yPx),
-                    	dist
+                    	((double) rect.x() 		/ (double) this.xPx),
+                    	((double) rect.y() 		/ (double) this.yPx),
+                    	((double) rect.width()	/ (double) this.xPx),
+                    	((double) rect.height()	/ (double) this.yPx),
+                    	distance
                     );
                     
                     cvRectangle(
                     	grabbedImage,
-                    	cvPoint(r.x(), r.y()),
-                    	cvPoint(r.x() + r.width(), r.y() + r.height()),
+                    	cvPoint(rect.x(), rect.y()),
+                    	cvPoint(rect.x() + rect.width(), rect.y() + rect.height()),
                     	CvScalar.RED, 1, CV_AA, 0
                     );
         		}
@@ -131,8 +128,8 @@ public class Tracker {
                             
                             cvRectangle(
                             	grabbedImage,
-                            	cvPoint((int) Math.round(center.x()-(size.width()/2)), (int) Math.round(center.y()-(size.height()/2))),
-                            	cvPoint((int) Math.round(center.x()+(size.width()/2)), (int) Math.round(center.y()+(size.height()/2))),
+                            	cvPoint(Math.round(center.x()-(size.width()/2)), Math.round(center.y()-(size.height()/2))),
+                            	cvPoint(Math.round(center.x()+(size.width()/2)), Math.round(center.y()+(size.height()/2))),
                             	CvScalar.WHITE, 1, CV_AA, 0
                             );
 	                    }
