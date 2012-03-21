@@ -1,6 +1,8 @@
-package app;
+package algorithm;
 
 import java.text.DecimalFormat;
+
+import application.Controller;
 
 public class CamState {
 	private boolean 		cam;

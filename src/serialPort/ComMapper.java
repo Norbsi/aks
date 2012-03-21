@@ -1,8 +1,8 @@
 package serialPort;
 
 import gnu.io.SerialPort;
-import app.Configuration;
-import app.Controller;
+import application.Configuration;
+import application.Controller;
 
 public class ComMapper {
 	Controller 			controller;

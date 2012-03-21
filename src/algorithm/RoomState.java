@@ -1,8 +1,9 @@
-package app;
+package algorithm;
 
 import java.text.DecimalFormat;
 import java.util.LinkedList;
 import java.util.List;
+
 
 public class RoomState {
 	private List<Body> 		bodyList;

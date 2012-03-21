@@ -1,8 +1,13 @@
-package app;
+package application;
 
 import java.util.Timer;
 
-import opencv.TrackerThread;
+import algorithm.CamController;
+import algorithm.CamState;
+import algorithm.RoomState;
+import algorithm.StateTask;
+
+import openCV.TrackerThread;
 import serialPort.ComMapper;
 import serialPort.SerialThread;
 import gui.Gui;

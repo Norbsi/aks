@@ -1,6 +1,6 @@
 package serialPort;
 
-import app.Controller;
+import application.Controller;
 
 public class SerialThread implements Runnable {
 	private Controller controller;

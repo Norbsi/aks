@@ -1,7 +1,7 @@
-package opencv;
+package openCV;
 
-import app.Configuration;
-import app.Controller;
+import application.Configuration;
+import application.Controller;
 
 import com.googlecode.javacpp.Loader;
 import com.googlecode.javacv.*;
@@ -36,7 +36,7 @@ public class Tracker {
 	}
 	
     public void run() throws Exception {
-        String classifierName = "src/resources/opencv/haarcascade_upperbody.xml";
+        String classifierName = "src/resources/openCV/haarcascade_upperbody.xml";
 
         // Preload the opencv_objdetect module to work around a known bug.
         Loader.load(opencv_objdetect.class);

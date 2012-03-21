@@ -1,6 +1,6 @@
-package opencv;
+package openCV;
 
-import app.Controller;
+import application.Controller;
 
 public class TrackerThread implements Runnable {
 	private Controller controller;

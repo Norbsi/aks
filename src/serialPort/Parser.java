@@ -3,7 +3,7 @@ package serialPort;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import app.Controller;
+import application.Controller;
 
 public class Parser {
 	private Controller controller;

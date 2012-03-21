@@ -1,6 +1,8 @@
-package app;
+package algorithm;
 
 import java.util.TimerTask;
+
+import application.Controller;
 
 public class StateTask extends TimerTask {
 	private Controller controller;

@@ -1,4 +1,4 @@
-package app;
+package gui;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -6,6 +6,10 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 
 import javax.swing.JComponent;
+
+import algorithm.Body;
+import application.Configuration;
+import application.Controller;
 
 public class Map extends JComponent {
 	/**

@@ -1,6 +1,8 @@
-package app;
+package algorithm;
 
 import java.util.Date;
+
+import application.Controller;
 
 public class Body {
 	private double 			x, y, z, probability;

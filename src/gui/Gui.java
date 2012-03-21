@@ -5,11 +5,10 @@ import java.awt.GridLayout;
 
 import javax.swing.JTextArea;
 
-import app.Controller;
-import app.Keyboard;
-import app.CamState;
-import app.Map;
-import app.RoomState;
+import algorithm.CamState;
+import algorithm.RoomState;
+import application.Controller;
+import application.Keyboard;
 
 public class Gui {
 	private MainFrame 		mainFrame;

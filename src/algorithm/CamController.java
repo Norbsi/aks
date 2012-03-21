@@ -1,6 +1,9 @@
-package app;
+package algorithm;
 
 import java.text.DecimalFormat;
+
+import application.Configuration;
+import application.Controller;
 
 public class CamController {
 	private Controller 		controller;
