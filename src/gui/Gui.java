@@ -63,7 +63,13 @@ public class Gui {
 	}
 	
 	public void pauseConsole() {
-		this.paused = !this.paused;
+		if (this.paused) {
+			this.paused = false;
+			this.printConsole("weiter");
+		} else {
+			this.printConsole("pausiert");
+			this.paused = true;
+		}
 	}
 	
 	public void printConsole(String text) {
