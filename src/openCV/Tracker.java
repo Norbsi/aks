@@ -74,9 +74,7 @@ public class Tracker {
         	smoothGray 	= IplImage.create(this.xPx, this.yPx, IPL_DEPTH_8U, 1);
         	cvSmooth(grayImage, smoothGray, CV_GAUSSIAN, 9, 9, 0.1, 0.1);            
 
-            if (diff == null) {
-                diff = IplImage.create(this.xPx, this.yPx, IPL_DEPTH_8U, 1);
-            }
+            if (diff == null) diff = IplImage.create(this.xPx, this.yPx, IPL_DEPTH_8U, 1);
 
             cvCvtColor(grabbedImage, grayImage, CV_BGR2GRAY);
             CvSeq bodies = cvHaarDetectObjects(grayImage, classifier, storage, 1.1, 3, CV_HAAR_DO_CANNY_PRUNING);
