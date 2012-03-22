@@ -38,9 +38,8 @@ public class ComMapper {
 		}
 	}
 	
-	public void send(int input) {
-		// TODO FIX
-		this.sconn.send(input, 0);
+	public void send(int inputX, int inputY) {
+		this.sconn.send(inputX, inputY);
 	}
 	
 	public Parser getParser() {

@@ -136,11 +136,12 @@ public class CamController {
 		}
 		
 		if (masterBody != null) {
-			double bodyRad = Math.atan(masterBody.getX() / masterBody.getY());
+			double bodyRadX = Math.atan(masterBody.getX() / masterBody.getY());
 
-			if (Math.abs(bodyRad - this.getCamPosRad()) > this.moveThreshold) {
-				double newCamPos = bodyRad / (Math.toRadians(this.maxCamAngle) / this.maxCamPos);
-				this.controller.getSerial().send((int) newCamPos);
+			if (Math.abs(bodyRadX - this.getCamPosRad()) > this.moveThreshold) {
+				double newCamPos = bodyRadX / (Math.toRadians(this.maxCamAngle) / this.maxCamPos);
+				// TODO FIX
+				this.controller.getSerial().send((int) newCamPos, 0);
 			}
 		}
 	}

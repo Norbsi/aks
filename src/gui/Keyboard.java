@@ -23,34 +23,34 @@ public class Keyboard implements KeyListener {
 				break;
 			case KeyEvent.VK_S: 
 				gui.printConsole("UNTEN gedrückt", 3);
-				this.controller.getSerial().send(1);
+				this.controller.getSerial().send(this.controller.getCamState().getCamPosX(), this.controller.getCamState().getCamPosY()-50);
 				break;
 			case KeyEvent.VK_W: 
 				gui.printConsole("OBEN gedrückt", 3);
-				this.controller.getSerial().send(2);
+				this.controller.getSerial().send(this.controller.getCamState().getCamPosX(), this.controller.getCamState().getCamPosY()+50);
 				break;
 			case KeyEvent.VK_A: 
 				gui.printConsole("LINKS gedrückt", 3);
-				this.controller.getSerial().send(this.controller.getCamState().getCamPosX()-50);
+				this.controller.getSerial().send(this.controller.getCamState().getCamPosX()-50, this.controller.getCamState().getCamPosY());
 				this.controller.getRoomState().reset();
 				break;
 			case KeyEvent.VK_D: 
 				gui.printConsole("RECHTS gedrückt", 3);
-				this.controller.getSerial().send(this.controller.getCamState().getCamPosX()+50);
+				this.controller.getSerial().send(this.controller.getCamState().getCamPosX()+50, this.controller.getCamState().getCamPosY());
 				this.controller.getRoomState().reset();
 				break;
 			case KeyEvent.VK_SPACE: 
 				gui.printConsole("ZENTRIEREN gedrückt", 3);
-				this.controller.getSerial().send(0);
+				this.controller.getSerial().send(0,0);
 				this.controller.getRoomState().reset();
 				break;
 			case KeyEvent.VK_E: 
-				gui.printConsole("e (100) gedrückt", 3);
-				this.controller.getSerial().send(100);
+				gui.printConsole("e (100,0) gedrückt", 3);
+				this.controller.getSerial().send(100,0);
 				break;
 			case KeyEvent.VK_Q: 
-				gui.printConsole("q (-200) gedrückt", 3);
-				this.controller.getSerial().send(-200);
+				gui.printConsole("q (-200,0) gedrückt", 3);
+				this.controller.getSerial().send(-200,0);
 				break;
 			case KeyEvent.VK_DELETE: 
 				gui.clearConsole();
