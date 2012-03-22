@@ -31,8 +31,8 @@ public class Tracker {
 		this.xPx 	= this.yPx * 4 / 3;
 		this.thPx	= (int) Math.round(this.xPx / this.configuration.getCamFOVX() * (this.configuration.getCamFOVX() - this.configuration.getMoveThreshold()) / 2);
 		
-		this.controller.getGui().printConsole("Auflösung (px): " + this.xPx + "x" + this.yPx);
-		this.controller.getGui().printConsole("Threshold (px): " + this.thPx + " und " + (this.xPx - this.thPx));	
+		this.controller.getGui().printConsole("Auflösung (px): " + this.xPx + "x" + this.yPx, 2);
+		this.controller.getGui().printConsole("Threshold (px): " + this.thPx + " und " + (this.xPx - this.thPx), 2);	
 	}
 	
     public void run() throws Exception {

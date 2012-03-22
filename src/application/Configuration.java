@@ -10,7 +10,7 @@ import org.ini4j.Ini;
 import org.ini4j.InvalidFileFormatException;
 
 public class Configuration {
-	private 				int		baud, yres, deviceid, decay, decayTime, maxCamPos, maxCamAngle, moveThreshold, bodyThreshold;
+	private 				int		baud, yres, deviceid, decay, decayTime, maxCamPos, maxCamAngle, moveThreshold, bodyThreshold, verbosity;
 	private 				String	port;
 	private					boolean camOn;
 	private					double	maxVelocity, minHeight, camFOVX, camFOVY, detectBonus;
@@ -20,6 +20,8 @@ public class Configuration {
 
 	public Configuration() {
 		this.loadIniFile();
+		
+		this.verbosity			= Integer.parseInt(this.ini.get("program", "verbosity"));
 		
 		this.baud 				= Integer.parseInt(this.ini.get("serial", "baud"));
 		this.port				= this.ini.get("serial", "port");
@@ -130,5 +132,8 @@ public class Configuration {
 	}
 	public double getCamFOVY() {
 		return this.camFOVY;
+	}
+	public int getVerbosity() {
+		return this.verbosity;
 	}
 }

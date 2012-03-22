@@ -22,34 +22,34 @@ public class Keyboard implements KeyListener {
 				System.exit(0);
 				break;
 			case KeyEvent.VK_S: 
-				gui.printConsole("UNTEN gedrückt");
+				gui.printConsole("UNTEN gedrückt", 3);
 				this.controller.getSerial().send(1);
 				break;
 			case KeyEvent.VK_W: 
-				gui.printConsole("OBEN gedrückt");
+				gui.printConsole("OBEN gedrückt", 3);
 				this.controller.getSerial().send(2);
 				break;
 			case KeyEvent.VK_A: 
-				gui.printConsole("LINKS gedrückt");
+				gui.printConsole("LINKS gedrückt", 3);
 				this.controller.getSerial().send(this.controller.getCamState().getCamPosX()-50);
 				this.controller.getRoomState().reset();
 				break;
 			case KeyEvent.VK_D: 
-				gui.printConsole("RECHTS gedrückt");
+				gui.printConsole("RECHTS gedrückt", 3);
 				this.controller.getSerial().send(this.controller.getCamState().getCamPosX()+50);
 				this.controller.getRoomState().reset();
 				break;
 			case KeyEvent.VK_SPACE: 
-				gui.printConsole("ZENTRIEREN gedrückt");
+				gui.printConsole("ZENTRIEREN gedrückt", 3);
 				this.controller.getSerial().send(0);
 				this.controller.getRoomState().reset();
 				break;
 			case KeyEvent.VK_E: 
-				gui.printConsole("e (100) gedrückt");
+				gui.printConsole("e (100) gedrückt", 3);
 				this.controller.getSerial().send(100);
 				break;
 			case KeyEvent.VK_Q: 
-				gui.printConsole("q (-200) gedrückt");
+				gui.printConsole("q (-200) gedrückt", 3);
 				this.controller.getSerial().send(-200);
 				break;
 			case KeyEvent.VK_DELETE: 
@@ -58,6 +58,24 @@ public class Keyboard implements KeyListener {
 			case KeyEvent.VK_P: 
 				gui.pauseConsole();
 				break;
+			case KeyEvent.VK_1:
+				gui.setVerbosity(1);
+				break;
+			case KeyEvent.VK_2:
+				gui.setVerbosity(2);
+				break;
+			case KeyEvent.VK_3:
+				gui.setVerbosity(3);
+				break;
+			case KeyEvent.VK_4:
+				gui.setVerbosity(4);
+				break;
+			case KeyEvent.VK_5:
+				gui.setVerbosity(5);
+				break;
+			case KeyEvent.VK_6:
+				gui.setVerbosity(6);
+				break;		
 			default:
 		}
 	}

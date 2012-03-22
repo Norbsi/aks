@@ -34,7 +34,7 @@ public class ComMapper {
 		try {
 			this.sconn.openConnection();
 		} catch (SerialConnectionException e) {
-			this.controller.getGui().printConsole("Keine Verbindung zum Serial Port");
+			this.controller.getGui().printConsole("Keine Verbindung zum Serial Port", 1);
 		}
 	}
 	

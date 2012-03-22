@@ -45,7 +45,8 @@ public class CamController {
 			"Körper gefunden: x:" +
 			df.format(cartPos.x) + "m y:" +
 			df.format(cartPos.y) + "m z:" +
-			df.format(cartPos.z) + "m"
+			df.format(cartPos.z) + "m",
+			5
     	);
     	
     	if (cartPos.z > this.minHeight) {
@@ -92,7 +93,7 @@ public class CamController {
         	// TODO proper size calculation
         	if ( (angDist / Math.pow(bDist, 0.45)) < 0.2 ) {
         		candidate.moved(motion);
-        		this.controller.getGui().printConsole("Bewegung erkannt (" + df.format(candidate.getX()) + "m, " + df.format(candidate.getY()) + "m, " +  df.format(candidate.getZ()) + "m)");
+        		this.controller.getGui().printConsole("Bewegung erkannt (" + df.format(candidate.getX()) + "m, " + df.format(candidate.getY()) + "m, " +  df.format(candidate.getZ()) + "m)", 6);
         	}
         }
         this.controller.getRoomState().lock(false);

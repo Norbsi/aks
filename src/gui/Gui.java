@@ -17,13 +17,15 @@ public class Gui {
 	private JTextArea		camState, roomState;
 	private Map				map;
 	private boolean			paused;
+	private int				verbosity;
 	
 	/**
 	 * Create the application.
 	 */
 	public Gui(Controller controller) {
-		this.controller = controller;
+		this.controller 	= controller;
 		this.keyboard 		= new Keyboard(this.controller);
+		this.verbosity		= controller.getConfiguration().getVerbosity();
 		this.initialize();
 	}
 
@@ -63,15 +65,15 @@ public class Gui {
 	public void pauseConsole() {
 		if (this.paused) {
 			this.paused = false;
-			this.printConsole("weiter");
+			this.printConsole("weiter", 4);
 		} else {
-			this.printConsole("pausiert");
+			this.printConsole("pausiert", 4);
 			this.paused = true;
 		}
 	}
 	
-	public void printConsole(String text) {
-		if (!this.paused) this.console.append(text);
+	public void printConsole(String text, int priority) {
+		if (!this.paused && priority <= this.verbosity) this.console.append(text);
 	}
 	
 	public void printSend(String text) {
@@ -96,5 +98,10 @@ public class Gui {
 	
 	public Keyboard getKeyboard() {
 		return this.keyboard;
+	}
+	
+	public void setVerbosity(int newVerbosity) {
+		this.printConsole("Ausführlichkeit auf " + newVerbosity + " gestellt.", 1);
+		this.verbosity = newVerbosity;
 	}
 }
