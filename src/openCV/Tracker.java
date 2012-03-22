@@ -21,7 +21,7 @@ import static com.googlecode.javacv.cpp.opencv_objdetect.*;
 public class Tracker {
 	private Controller 		controller;
 	private Configuration 	configuration;
-	private int 			xPx, yPx, thPx;
+	private int 			xPx, yPx, thXPx, thYPx;
 	
 	public Tracker(Controller controller) {
 		this.controller 	= controller;
@@ -29,10 +29,12 @@ public class Tracker {
 		
 		this.yPx 	= this.configuration.getYres();
 		this.xPx 	= this.yPx * 4 / 3;
-		this.thPx	= (int) Math.round(this.xPx / this.configuration.getCamFOVX() * (this.configuration.getCamFOVX() - this.configuration.getMoveThreshold()) / 2);
+		this.thXPx	= (int) Math.round(this.xPx / this.configuration.getCamFOVX() * (this.configuration.getCamFOVX() - this.configuration.getMoveThreshold()) / 2);
+		this.thYPx	= (int) Math.round(this.yPx / this.configuration.getCamFOVY() * (this.configuration.getCamFOVY() - this.configuration.getMoveThreshold()) / 2);
 		
 		this.controller.getGui().printConsole("Auflösung (px): " + this.xPx + "x" + this.yPx, 2);
-		this.controller.getGui().printConsole("Threshold (px): " + this.thPx + " und " + (this.xPx - this.thPx), 2);	
+		this.controller.getGui().printConsole("ThresholdX (px): " + this.thXPx + " und " + (this.xPx - this.thXPx), 2);
+		this.controller.getGui().printConsole("ThresholdY (px): " + this.thYPx + " und " + (this.yPx - this.thYPx), 2);
 	}
 	
     public void run() throws Exception {
@@ -137,8 +139,11 @@ public class Tracker {
                 }                
             }
             
-            cvLine(grabbedImage, cvPoint(this.thPx, 0), cvPoint(this.thPx, this.yPx), CvScalar.GREEN, 1, CV_AA, 0);
-            cvLine(grabbedImage, cvPoint(this.xPx - this.thPx, 0), cvPoint(this.xPx - this.thPx, this.yPx), CvScalar.GREEN, 1, CV_AA, 0);
+            cvLine(grabbedImage, cvPoint(this.thXPx, 0), cvPoint(this.thXPx, this.yPx), CvScalar.GREEN, 1, CV_AA, 0);
+            cvLine(grabbedImage, cvPoint(this.xPx - this.thXPx, 0), cvPoint(this.xPx - this.thXPx, this.yPx), CvScalar.GREEN, 1, CV_AA, 0);
+            
+            cvLine(grabbedImage, cvPoint(0, this.thYPx), cvPoint(this.xPx, this.thYPx), CvScalar.GREEN, 1, CV_AA, 0);
+            cvLine(grabbedImage, cvPoint(0, this.yPx - this.thYPx), cvPoint(this.xPx, this.yPx - this.thYPx), CvScalar.GREEN, 1, CV_AA, 0);
             
             frame.showImage(grabbedImage);
             cvClearMemStorage(storage);

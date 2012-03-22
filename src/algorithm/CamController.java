@@ -144,9 +144,9 @@ public class CamController {
 				(Math.abs(bodyRad.x - this.getCamPosRad()) > this.moveThreshold)
 				|| (Math.abs(bodyRad.y - this.getCamPosRad()) > this.moveThreshold)
 			) {
-				Point2D newCamPos = new Point2D();
-				newCamPos.x = bodyRad.x / (Math.toRadians(this.maxCamAngle) / this.maxCamPos);
-				newCamPos.y = bodyRad.y / (Math.toRadians(this.maxCamAngle) / this.maxCamPos);
+				Point2D newCamPos 	= new Point2D();
+				newCamPos.x 		= bodyRad.x / (Math.toRadians(this.maxCamAngle) / this.maxCamPos);
+				newCamPos.y 		= bodyRad.y / (Math.toRadians(this.maxCamAngle) / this.maxCamPos);
 				
 				this.controller.getSerial().send((int) newCamPos.x, (int) newCamPos.y);
 			}
