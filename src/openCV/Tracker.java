@@ -43,6 +43,7 @@ public class Tracker {
 
         CvHaarClassifierCascade classifier = new CvHaarClassifierCascade(cvLoad(classifierName));
         if (classifier.isNull()) {
+        	// TODO Exception
             System.err.println("Error loading classifier file \"" + classifierName + "\".");
             System.exit(1);
         }

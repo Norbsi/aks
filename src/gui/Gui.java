@@ -8,6 +8,7 @@ import javax.swing.JTextArea;
 import algorithm.CamState;
 import algorithm.RoomState;
 import application.Controller;
+import application.Keyboard;
 
 public class Gui {
 	private MainFrame 		mainFrame;

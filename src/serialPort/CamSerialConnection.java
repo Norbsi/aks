@@ -17,6 +17,7 @@ import java.util.TooManyListenersException;
 
 import application.Controller;
 
+
 /**
 A class that handles the details of a serial connection. Reads from one 
 TextArea and writes to a second TextArea. 
@@ -31,6 +32,7 @@ public class CamSerialConnection implements SerialPortEventListener, CommPortOwn
     private CommPortIdentifier 	portId;
     private SerialPort 			sPort;
     private boolean 			open;
+    int posX1 = 0, posX2 = 0, posY1 = 0, posY2 = 0, negX1 = 0, negX2 = 0, negY1 = 0, negY2 = 0;
 
     /**
     Creates a SerialConnection object and initilizes variables passed in
@@ -265,20 +267,111 @@ public class CamSerialConnection implements SerialPortEventListener, CommPortOwn
 		}
 		*/
     }
+    
+    public int setPosWert(int wert){
+    	if(wert > 128){
+    		wert = wert - 128;
+    		wert = wert * -1;
+    	}
+    	return wert;
+    }
+    
+    public int setNegWert(int wert){
+    	if(wert < -128){
+    		wert = wert + 128;
+    		wert = wert * -1;
+    	}
+    	return wert;
+    }
 
-	public void send(int input) {
-		input = input / 4;
-		input += 128;
-		
-		if (os != null) {
-		    try {
-		    	os.write(input);
-		    	this.gui.printSend(String.valueOf(input));
-		    } catch (IOException e) {
-		    	System.err.println("OutputStream write error: " + e);
-		    }
-		} else {
-			this.gui.printSend("Keine Verbindung");
+	public void sendWertBerechnenX(int inputX, int inputY){
+		if(inputX >= 0){ //Positiv
+			if(inputX <= 256){
+				posX1 = setPosWert(inputX);
+				posX2 = 0;
+			}else{
+				posX1 = 256;
+				posX2 = setPosWert(inputX - 256);
+			}
+		}
+		if(inputX < 0){ //Negativ
+			if(inputX > -255){
+				negX1 = setNegWert(inputX);
+				negX2 = 0;
+			}else{
+				negX1 = -255;
+				negX2 = setNegWert(inputX - 255);
+			}
+		}
+		if(inputY >= 0){ //Positiv
+			if(inputY <= 256){
+				posY1 = setPosWert(inputX);
+				posY2 = 0;
+			}else{
+				posY1 = 256;
+				posY2 = setPosWert(inputX - 256);
+			}
+		}
+		if(inputY < 0){ //Negativ
+			if(inputY > -255){
+				negY1 = setNegWert(inputX);
+				negY2 = 0;
+			}else{
+				negY1 = -255;
+				negY2 = setNegWert(inputX - 255);
+			}
+		}
+	}
+	    
+    public void send(int inputX, int inputY) {
+//		input = input / 4;
+//		input += 128;	
+		int input = 0;
+    	sendWertBerechnenX(inputX, inputY);
+    	
+		for(int i=0; i<10; i++){
+			switch (i) {
+			case 0:
+				input = -126;
+				break;
+			case 1:
+				input = posX1;
+				break;
+			case 2:
+				input = posX2;
+				break;
+			case 3:
+				input = negX1;
+				break;
+			case 4:
+				input = negX2;
+				break;
+			case 5:
+				input = posY1;
+				break;
+			case 6:
+				input = posY2;
+				break;
+			case 7:
+				input = negX1;
+				break;
+			case 8:
+				input = negX2;
+				break;
+			case 9:
+				input = 127;
+				break;
+			}
+			if (os != null) {
+			    try {
+			    	os.write(input);
+			    	this.gui.printSend(String.valueOf(input));
+			    } catch (IOException e) {
+			    	System.err.println("OutputStream write error: " + e);
+			    }
+			} else {
+				this.gui.printSend("Keine Verbindung");
+			}
 		}
     }
 }
