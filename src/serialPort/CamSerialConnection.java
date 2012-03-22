@@ -305,20 +305,20 @@ public class CamSerialConnection implements SerialPortEventListener, CommPortOwn
 		}
 		if(inputY >= 0){ //Positiv
 			if(inputY <= 256){
-				posY1 = setPosWert(inputX);
+				posY1 = setPosWert(inputY);
 				posY2 = 0;
 			}else{
 				posY1 = 256;
-				posY2 = setPosWert(inputX - 256);
+				posY2 = setPosWert(inputY - 256);
 			}
 		}
 		if(inputY < 0){ //Negativ
 			if(inputY > -255){
-				negY1 = setNegWert(inputX);
+				negY1 = setNegWert(inputY);
 				negY2 = 0;
 			}else{
 				negY1 = -255;
-				negY2 = setNegWert(inputX - 255);
+				negY2 = setNegWert(inputY - 255);
 			}
 		}
 	}
@@ -353,13 +353,21 @@ public class CamSerialConnection implements SerialPortEventListener, CommPortOwn
 				input = posY2;
 				break;
 			case 7:
-				input = negX1;
+				input = negY1;
 				break;
 			case 8:
-				input = negX2;
+				input = negY2;
 				break;
 			case 9:
 				input = 127;
+				posX1 = 0;
+				posX2 = 0;
+				posY1 = 0;
+				posY2 = 0;
+				negX1 = 0;
+				negX2 = 0;
+				negY1 = 0;
+				negY2 = 0;
 				break;
 			}
 			if (os != null) {
