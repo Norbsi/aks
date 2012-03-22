@@ -14,8 +14,8 @@ public class CamState {
 	public CamState(Controller controller) {
 		this.controller 	= controller;
 		this.cam 			= false;
-		this.camPos.x 		= 0;
-		this.camPos.y 		= 0;
+
+		this.camPos			= new Point2D(0,0);
 		this.maxCamPos		= this.controller.getConfiguration().getMaxCamPos();
 		this.maxCamAngle	= this.controller.getConfiguration().getMaxCamAngle();
 		this.camSpeedX		= 0;		
