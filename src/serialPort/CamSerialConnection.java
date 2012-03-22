@@ -17,6 +17,7 @@ import java.util.TooManyListenersException;
 
 import application.Controller;
 
+
 /**
 A class that handles the details of a serial connection. Reads from one 
 TextArea and writes to a second TextArea. 

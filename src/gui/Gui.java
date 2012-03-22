@@ -5,11 +5,10 @@ import java.awt.GridLayout;
 
 import javax.swing.JTextArea;
 
-import app.Controller;
-import app.Keyboard;
-import app.CamState;
-import app.Map;
-import app.RoomState;
+import algorithm.CamState;
+import algorithm.RoomState;
+import application.Controller;
+import application.Keyboard;
 
 public class Gui {
 	private MainFrame 		mainFrame;
@@ -18,6 +17,7 @@ public class Gui {
 	private Keyboard 		keyboard;
 	private JTextArea		camState, roomState;
 	private Map				map;
+	private boolean			paused;
 	
 	/**
 	 * Create the application.
@@ -53,18 +53,34 @@ public class Gui {
 		this.mainFrame.setMinimumSize(new Dimension(800,400));
 		this.mainFrame.pack();
 		this.mainFrame.setVisible(true);
-	}	
+	}
+	
+	public void clearConsole() {
+		this.console.clear();
+		this.send.clear();
+		this.receive.clear();
+	}
+	
+	public void pauseConsole() {
+		if (this.paused) {
+			this.paused = false;
+			this.printConsole("weiter");
+		} else {
+			this.printConsole("pausiert");
+			this.paused = true;
+		}
+	}
 	
 	public void printConsole(String text) {
-		this.console.append(text);
+		if (!this.paused) this.console.append(text);
 	}
 	
 	public void printSend(String text) {
-		this.send.append(text);
+		if (!this.paused) this.send.append(text);
 	}
 	
 	public void printReceive(String text) {
-		this.receive.append(text);
+		if (!this.paused) this.receive.append(text);
 	}
 	
 	public void updateCamState(CamState camState) {
