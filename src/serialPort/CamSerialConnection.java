@@ -15,7 +15,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.TooManyListenersException;
 
-import app.Controller;
+import application.Controller;
 
 /**
 A class that handles the details of a serial connection. Reads from one 
