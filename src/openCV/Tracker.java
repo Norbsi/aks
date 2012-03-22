@@ -121,8 +121,8 @@ public class Tracker {
                             CvSize2D32f 	size 	= box.size();
 
                             this.controller.getCamController().motionDetected(
-                            	(center.x()/ (double) this.xPx),
-                            	(center.y()/ (double) this.yPx),
+                            	((double) center.x() / (double) this.xPx),
+                            	((double) center.y() / (double) this.yPx),
                             	size.width() * size.height()
                             );
                             

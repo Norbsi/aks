@@ -1,9 +1,10 @@
-package application;
+package gui;
 
-import gui.Gui;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+
+import application.Controller;
 
 public class Keyboard implements KeyListener {
 	Controller controller;
