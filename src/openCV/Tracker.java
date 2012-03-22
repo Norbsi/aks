@@ -22,6 +22,7 @@ public class Tracker {
 	private Controller 		controller;
 	private Configuration 	configuration;
 	private int 			xPx, yPx, thXPx, thYPx;
+	private IplImage		grabbedImage = null;
 	
 	public Tracker(Controller controller) {
 		this.controller 	= controller;
@@ -33,8 +34,8 @@ public class Tracker {
 		this.thYPx	= (int) Math.round(this.yPx / this.configuration.getCamFOVY() * (this.configuration.getCamFOVY() - this.configuration.getMoveThreshold()) / 2);
 		
 		this.controller.getGui().printConsole("Auflösung (px): " + this.xPx + "x" + this.yPx, 2);
-		this.controller.getGui().printConsole("SchwellwerteX (px): " + this.thXPx + " und " + (this.xPx - this.thXPx) + "(" + this.xPx + ")", 2);
-		this.controller.getGui().printConsole("SchwellwerteY (px): " + this.thYPx + " und " + (this.yPx - this.thYPx) + "(" + this.yPx + ")", 2);
+		this.controller.getGui().printConsole("SchwellwerteX (px): " + this.thXPx + " und " + (this.xPx - this.thXPx) + " (" + this.xPx + ")", 2);
+		this.controller.getGui().printConsole("SchwellwerteY (px): " + this.thYPx + " und " + (this.yPx - this.thYPx) + " (" + this.yPx + ")", 2);
 	}
 	
     public void run() throws Exception {
@@ -62,7 +63,7 @@ public class Tracker {
         grabber.setImageWidth(this.xPx);
         grabber.start();
 
-        IplImage 	grabbedImage 	= grabber.grab();
+        this.grabbedImage			= grabber.grab();
         IplImage 	grayImage    	= null;
         IplImage 	smoothGray		= null;
         IplImage 	prevImage		= null;
@@ -70,16 +71,16 @@ public class Tracker {
 
         CvMemStorage storage = CvMemStorage.create();
 
-        while (frame.isVisible() && (grabbedImage = grabber.grab()) != null) {
+        while (frame.isVisible() && (this.grabbedImage = grabber.grab()) != null) {
         	prevImage 	= smoothGray;
         	grayImage 	= IplImage.create(this.xPx, this.yPx, IPL_DEPTH_8U, 1);
-        	cvCvtColor(grabbedImage, grayImage, CV_RGB2GRAY);
+        	cvCvtColor(this.grabbedImage, grayImage, CV_RGB2GRAY);
         	smoothGray 	= IplImage.create(this.xPx, this.yPx, IPL_DEPTH_8U, 1);
         	cvSmooth(grayImage, smoothGray, CV_GAUSSIAN, 9, 9, 0.1, 0.1);            
 
             if (diff == null) diff = IplImage.create(this.xPx, this.yPx, IPL_DEPTH_8U, 1);
 
-            cvCvtColor(grabbedImage, grayImage, CV_BGR2GRAY);
+            cvCvtColor(this.grabbedImage, grayImage, CV_BGR2GRAY);
             CvSeq bodies = cvHaarDetectObjects(grayImage, classifier, storage, 1.1, 3, CV_HAAR_DO_CANNY_PRUNING);
             
             for (int i = 0; i < bodies.total(); i++) {
@@ -97,11 +98,10 @@ public class Tracker {
                     	distance
                     );
                     
-                    cvRectangle(
-                    	grabbedImage,
+                    this.drawRectangle(
                     	cvPoint(rect.x(), rect.y()),
                     	cvPoint(rect.x() + rect.width(), rect.y() + rect.height()),
-                    	CvScalar.RED, 1, CV_AA, 0
+                    	CvScalar.RED
                     );
         		}
             }
@@ -127,11 +127,10 @@ public class Tracker {
                             	size.width() * size.height()
                             );
                             
-                            cvRectangle(
-                            	grabbedImage,
+                            this.drawRectangle(
                             	cvPoint(Math.round(center.x()-(size.width()/2)), Math.round(center.y()-(size.height()/2))),
                             	cvPoint(Math.round(center.x()+(size.width()/2)), Math.round(center.y()+(size.height()/2))),
-                            	CvScalar.WHITE, 1, CV_AA, 0
+                            	CvScalar.WHITE
                             );
 	                    }
 	                    contour = contour.h_next();
@@ -139,17 +138,21 @@ public class Tracker {
                 }                
             }
             
-            cvLine(grabbedImage, cvPoint(this.thXPx, 0), cvPoint(this.thXPx, this.yPx), CvScalar.GREEN, 1, CV_AA, 0);
-            cvLine(grabbedImage, cvPoint(this.xPx - this.thXPx, 0), cvPoint(this.xPx - this.thXPx, this.yPx), CvScalar.GREEN, 1, CV_AA, 0);
-            
-            cvLine(grabbedImage, cvPoint(0, this.thYPx), cvPoint(this.xPx, this.thYPx), CvScalar.GREEN, 1, CV_AA, 0);
-            cvLine(grabbedImage, cvPoint(0, this.yPx - this.thYPx), cvPoint(this.xPx, this.yPx - this.thYPx), CvScalar.GREEN, 1, CV_AA, 0);
-            
-            frame.showImage(grabbedImage);
+            this.drawRectangle(
+            	cvPoint(this.thXPx, this.thYPx),
+            	cvPoint(this.xPx - this.thXPx, this.yPx - this.thYPx),
+            	CvScalar.GREEN
+            );
+
+            frame.showImage(this.grabbedImage);
             cvClearMemStorage(storage);
         }
         grabber.stop();
         frame.dispose();
+    }
+    
+    private void drawRectangle(CvPoint p1, CvPoint p2, CvScalar color) {
+        cvRectangle(this.grabbedImage, p1, p2, color, 1, CV_AA, 0);
     }
     
     private double log(double base, double x) {
