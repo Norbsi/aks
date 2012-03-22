@@ -28,9 +28,14 @@ public class CamController {
 		this.r90					= Math.toRadians(90);
 	}
 	
-	private double getCamPosRad() {
-		double camPos = this.controller.getCamState().getCamPosX();
-		return (camPos / this.maxCamPos) * Math.toRadians(this.maxCamAngle);
+	private Point2D getCamPosRad() {
+		Point2D camPos 		= this.controller.getCamState().getCamPos();
+		Point2D camPosRad 	= new Point2D();
+		
+		camPosRad.x 		= (camPos.x / this.maxCamPos) * Math.toRadians(this.maxCamAngle);
+		camPosRad.y 		= (camPos.y / this.maxCamPos) * Math.toRadians(this.maxCamAngle);
+		
+		return camPosRad;
 	}
 	
 	public void bodyDetected(double x, double y, double width, double height, double dist) {
@@ -102,9 +107,8 @@ public class CamController {
 	private Point2D camPosToAbsPos(Point2D camPos) {
 		Point2D absPos = new Point2D();
 		
-		absPos.x = this.getCamPosRad() + (camPos.x - 0.5) * Math.toRadians(this.camFOVX);
-		// TODO fix for cam yaxis
-		absPos.y = (camPos.y - 0.5) * Math.toRadians(-this.camFOVY);
+		absPos.x = this.getCamPosRad().x + (camPos.x - 0.5) * Math.toRadians(this.camFOVX);
+		absPos.y = this.getCamPosRad().y + (camPos.y - 0.5) * Math.toRadians(-this.camFOVY);
 		
 		return absPos;
 	}
@@ -141,8 +145,8 @@ public class CamController {
 			bodyRad.y 		= Math.atan(masterBody.getZ() / masterBody.getY());
 
 			if (
-				(Math.abs(bodyRad.x - this.getCamPosRad()) > this.moveThreshold)
-				|| (Math.abs(bodyRad.y - this.getCamPosRad()) > this.moveThreshold)
+				(Math.abs(bodyRad.x - this.getCamPosRad().x) > this.moveThreshold)
+				|| (Math.abs(bodyRad.y - this.getCamPosRad().y) > this.moveThreshold)
 			) {
 				Point2D newCamPos 	= new Point2D();
 				newCamPos.x 		= bodyRad.x / (Math.toRadians(this.maxCamAngle) / this.maxCamPos);

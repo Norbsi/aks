@@ -23,20 +23,20 @@ public class Keyboard implements KeyListener {
 				break;
 			case KeyEvent.VK_S: 
 				gui.printConsole("UNTEN gedrückt", 3);
-				this.controller.getSerial().send(this.controller.getCamState().getCamPosX(), this.controller.getCamState().getCamPosY()-50);
+				this.controller.getSerial().send((int) this.controller.getCamState().getCamPos().x, (int) this.controller.getCamState().getCamPos().y-50);
 				break;
 			case KeyEvent.VK_W: 
 				gui.printConsole("OBEN gedrückt", 3);
-				this.controller.getSerial().send(this.controller.getCamState().getCamPosX(), this.controller.getCamState().getCamPosY()+50);
+				this.controller.getSerial().send((int) this.controller.getCamState().getCamPos().x, (int) this.controller.getCamState().getCamPos().y+50);
 				break;
 			case KeyEvent.VK_A: 
 				gui.printConsole("LINKS gedrückt", 3);
-				this.controller.getSerial().send(this.controller.getCamState().getCamPosX()-50, this.controller.getCamState().getCamPosY());
+				this.controller.getSerial().send((int) this.controller.getCamState().getCamPos().x-50, (int) this.controller.getCamState().getCamPos().y);
 				this.controller.getRoomState().reset();
 				break;
 			case KeyEvent.VK_D: 
 				gui.printConsole("RECHTS gedrückt", 3);
-				this.controller.getSerial().send(this.controller.getCamState().getCamPosX()+50, this.controller.getCamState().getCamPosY());
+				this.controller.getSerial().send((int) this.controller.getCamState().getCamPos().x+50, (int) this.controller.getCamState().getCamPos().y);
 				this.controller.getRoomState().reset();
 				break;
 			case KeyEvent.VK_SPACE: 

@@ -40,7 +40,7 @@ public class Map extends JComponent {
 		g.fillRect(0, 0, width, height);
 				
 		if (this.controller.getCamState() != null) {
-			double camPos		= this.controller.getCamState().getCamPosX();
+			double camPos		= this.controller.getCamState().getCamPos().x;
 			// TODO 45?
 			double camPosAngle	= camPos * 45 / this.maxCamPos;
 			

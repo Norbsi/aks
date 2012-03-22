@@ -6,15 +6,16 @@ import application.Controller;
 
 public class CamState {
 	private boolean 		cam;
-	private int 			camPosX, camPosY, maxCamPos, maxCamAngle, camSpeedX, camSpeedY;
+	private int 			maxCamPos, maxCamAngle, camSpeedX, camSpeedY;
 	private DecimalFormat 	df = new DecimalFormat("#.##");
 	private Controller		controller;
+	private Point2D			camPos;
 	
 	public CamState(Controller controller) {
 		this.controller 	= controller;
 		this.cam 			= false;
-		this.camPosX 		= 0;
-		this.camPosY 		= 0;
+		this.camPos.x 		= 0;
+		this.camPos.y 		= 0;
 		this.maxCamPos		= this.controller.getConfiguration().getMaxCamPos();
 		this.maxCamAngle	= this.controller.getConfiguration().getMaxCamAngle();
 		this.camSpeedX		= 0;		
@@ -34,19 +35,11 @@ public class CamState {
 		this.updateView();
 	}
 	
-	public int getCamPosX() {
-		return this.camPosX;
+	public Point2D getCamPos() {
+		return this.camPos;
 	}
-	public void setCamPosX(int newCamPosX) {
-		this.camPosX = newCamPosX;
-		this.updateView();
-	}
-	
-	public int getCamPosY() {
-		return this.camPosY;
-	}
-	public void setCamPosY(int newCamPosY) {
-		this.camPosY = newCamPosY;
+	public void setCamPos(Point2D newCamPos) {
+		this.camPos = newCamPos;
 		this.updateView();
 	}
 	
@@ -65,13 +58,13 @@ public class CamState {
 	
 	public String toString() {
 		String on 	= this.getCam() ? "an" : "aus";
-		double degX	= (double) this.getCamPosX() / this.maxCamPos * this.maxCamAngle;
-		double degY	= (double) this.getCamPosY() / this.maxCamPos * this.maxCamAngle;
+		double degX	= (double) this.camPos.x / this.maxCamPos * this.maxCamAngle;
+		double degY	= (double) this.camPos.y / this.maxCamPos * this.maxCamAngle;
 		
 		return 
 			"Kamera : " + on + "\n" +
-			"X-Position : " + this.getCamPosX() + " (" + df.format(degX) + "°)\n" +
-			"Y-Position : " + this.getCamPosY() + " (" + df.format(degY) + "°)\n" +
+			"X-Position : " + this.camPos.x + " (" + df.format(degX) + "°)\n" +
+			"Y-Position : " + this.camPos.y + " (" + df.format(degY) + "°)\n" +
 			"X-Geschwindigkeit : " + this.getCamSpeedX() + "\n" +
 			"Y-Geschwindigkeit : " + this.getCamSpeedY();  
 	}
