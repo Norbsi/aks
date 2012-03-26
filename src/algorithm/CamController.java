@@ -6,10 +6,11 @@ import application.Configuration;
 import application.Controller;
 
 public class CamController {
-	private Controller 		controller;
-	private double 			maxVelocity, minHeight, moveThreshold, camFOVX, camFOVY, r90;
-	private DecimalFormat 	df = new DecimalFormat("#.##");
-	private int				maxCamPos, maxCamAngle, bodyThreshold;
+	private Controller 			controller;
+	private double 				maxVelocity, minHeight, moveThreshold, camFOVX, camFOVY;
+	private DecimalFormat 		df = new DecimalFormat("#.##");
+	private int					maxCamPos, maxCamAngle, bodyThreshold;
+	private static final double R90 = Math.toRadians(90);
 	
 	public CamController(Controller controller) {
 		this.controller 			= controller;
@@ -24,8 +25,6 @@ public class CamController {
 		this.bodyThreshold			= configuration.getBodyThreshold();
 		this.camFOVX				= configuration.getCamFOVX();
 		this.camFOVY				= configuration.getCamFOVY();
-		
-		this.r90					= Math.toRadians(90);
 	}
 	
 	private Point2D getCamPosRad() {
@@ -136,7 +135,7 @@ public class CamController {
 	}
 	
 	private double angularDistance(Point2D p1, Point2D p2) {
-		return Math.acos(Math.cos(this.r90-p1.y) * Math.cos(this.r90-p2.y) + Math.sin(this.r90-p1.y) * Math.sin(this.r90-p2.y) * Math.cos(p1.x-p2.x));
+		return Math.acos(Math.cos(R90-p1.y) * Math.cos(R90-p2.y) + Math.sin(R90-p1.y) * Math.sin(R90-p2.y) * Math.cos(p1.x-p2.x));
 	}
 	
 	private void focus() {
