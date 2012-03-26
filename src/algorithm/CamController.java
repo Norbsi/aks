@@ -39,8 +39,8 @@ public class CamController {
 	
 	public void bodyDetected(double x, double y, double width, double height, double dist) {
 		// calculate body-center pos (image) x,y 0..1
-        double cX 		= x + width/2;
-        double cY 		= y + height/2;
+        double cX 		= x + width / 2;
+        double cY 		= y + height / 2;
         
         Point2D absPos 	= this.camPosToAbsPos(new Point2D(cX, cY));
         Point3D cartPos	= this.absPosToCartesian(absPos, dist);
@@ -82,36 +82,41 @@ public class CamController {
 	}
 	
 	public void motionDetected(double cX, double cY, double area) {
-		Point2D motion 	= this.camPosToAbsPos(new Point2D(cX, cY));
-        
-		Body 	closest = null;
-		this.controller.getRoomState().lock(true);
-        for (Body candidate : this.controller.getRoomState().getBodyList()) {
-        	Point2D bodyAng = this.cartesianToAbsRad(candidate.getPos());
-        	double	bDist	= candidate.getDistance();
-        	
-        	double 	angDist = this.angularDistance(motion, bodyAng);
-        	
-        	// TODO proper size calculation
-        	if (
-        		((angDist / Math.pow(bDist, 0.45)) < 0.2)
-        		&& (
-        			closest == null
-        			|| closest.getDistance() > bDist
-        		) 
-        	) {
-        		closest = candidate;
-        	}
-        }
-        
-        if (closest != null) {
-        	Point3D motionPos = this.absPosToCartesian(motion, closest.getDistance());
-	        closest.moved(motionPos);
+		if (
+			this.controller.getCamState().getCamSpeedX() == 0
+			&& this.controller.getCamState().getCamSpeedY() == 0
+		) {
+			Point2D motion 	= this.camPosToAbsPos(new Point2D(cX, cY));
 	        
-			this.controller.getGui().printConsole("Bewegung erkannt (" + df.format(motionPos.x) + ", " + df.format(motionPos.y) + ", " +  df.format(motionPos.z) + ")", 6);
-        }
-        
-        this.controller.getRoomState().lock(false);
+			Body 	closest = null;
+			this.controller.getRoomState().lock(true);
+	        for (Body candidate : this.controller.getRoomState().getBodyList()) {
+	        	Point2D bodyAng = this.cartesianToAbsRad(candidate.getPos());
+	        	double	bDist	= candidate.getDistance();
+	        	
+	        	double 	angDist = this.angularDistance(motion, bodyAng);
+	        	
+	        	// TODO proper size calculation
+	        	if (
+	        		((angDist / Math.pow(bDist, 0.45)) < 0.2)
+	        		&& (
+	        			closest == null
+	        			|| closest.getDistance() > bDist
+	        		) 
+	        	) {
+	        		closest = candidate;
+	        	}
+	        }
+	        
+	        if (closest != null) {
+	        	Point3D motionPos = this.absPosToCartesian(motion, closest.getDistance());
+		        closest.moved(motionPos);
+		        
+				this.controller.getGui().printConsole("Bewegung erkannt (" + df.format(motionPos.x) + ", " + df.format(motionPos.y) + ", " +  df.format(motionPos.z) + ")", 6);
+	        }
+	        
+	        this.controller.getRoomState().lock(false);
+		}
 	}
 	
 	private Point2D camPosToAbsPos(Point2D camPos) {
