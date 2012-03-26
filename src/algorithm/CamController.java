@@ -83,8 +83,9 @@ public class CamController {
 	}
 	
 	public void motionDetected(double cX, double cY, double area) {
-		Point2D motion = this.camPosToAbsPos(new Point2D(cX, cY));
+		Point2D motion 	= this.camPosToAbsPos(new Point2D(cX, cY));
         
+		Body 	closest = null;
 		this.controller.getRoomState().lock(true);
         for (Body candidate : this.controller.getRoomState().getBodyList()) {
         	Point2D bodyAng = new Point2D();
@@ -96,11 +97,22 @@ public class CamController {
         	double bDist	= candidate.getDistance();
         	
         	// TODO proper size calculation
-        	if ( (angDist / Math.pow(bDist, 0.45)) < 0.2 ) {
-        		candidate.moved(motion);
-        		this.controller.getGui().printConsole("Bewegung erkannt (" + df.format(candidate.getX()) + "m, " + df.format(candidate.getY()) + "m, " +  df.format(candidate.getZ()) + "m)", 6);
+        	if (
+        		((angDist / Math.pow(bDist, 0.45)) < 0.2)
+        		&& (
+        			closest == null
+        			|| closest.getDistance() > bDist
+        		) 
+        	) {
+        		closest = candidate;
         	}
         }
+        
+        if (closest != null) {
+	        closest.moved(motion);
+			this.controller.getGui().printConsole("Bewegung erkannt (" + df.format(closest.getX()) + ", " + df.format(closest.getY()) + ", " +  df.format(closest.getZ()) + ")", 6);
+        }
+        
         this.controller.getRoomState().lock(false);
 	}
 	
