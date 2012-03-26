@@ -52,7 +52,7 @@ public class Map extends JComponent {
 			
 			g.setColor(Color.YELLOW);
 	    	for (Body body : this.controller.getRoomState().getBodyList()) {
-	    		if (body.getProbability() >= this.bodyThreshold) g.fillOval((int) (body.getX()/14 * width) + width/2, (int) (body.getY()/14 * -width) + height/2, width / 40, height / 40);
+	    		if (body.getProbability() >= this.bodyThreshold) g.fillOval((int) (body.getPos().x/14 * width) + width/2, (int) (body.getPos().y/14 * -width) + height/2, width / 40, height / 40);
 	    	}
 		}
     }

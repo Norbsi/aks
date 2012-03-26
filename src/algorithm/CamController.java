@@ -58,12 +58,12 @@ public class CamController {
 	    	
 	    	this.controller.getRoomState().lock(true);
 	    	for (Body candidate : this.controller.getRoomState().getBodyList()) {
-	    		double velocity = candidate.velocity(cartPos.x, cartPos.y, cartPos.z);
+	    		double velocity = candidate.calcVelocity(cartPos.x, cartPos.y, cartPos.z);
 	    		
 	    		if (velocity <= this.maxVelocity) {
 	    			if (
 	    				closest == null
-	    				|| closest.velocity(cartPos.x, cartPos.y, cartPos.z) < velocity
+	    				|| closest.calcVelocity(cartPos.x, cartPos.y, cartPos.z) < velocity
 	    			) {
 	    				closest = candidate;
 	    			}
@@ -72,9 +72,9 @@ public class CamController {
 	    	this.controller.getRoomState().lock(false);
 	    	
 	    	if (closest == null) {
-	    		this.controller.getRoomState().addBody(new Body(cartPos.x, cartPos.y, cartPos.z, this.controller));
+	    		this.controller.getRoomState().addBody(new Body(cartPos, this.controller));
 	    	} else {
-	    		closest.setPos(cartPos.x, cartPos.y, cartPos.z);
+	    		closest.setPos(cartPos);
 	    	}
 	    	
 	    	this.focus();
@@ -87,13 +87,10 @@ public class CamController {
 		Body 	closest = null;
 		this.controller.getRoomState().lock(true);
         for (Body candidate : this.controller.getRoomState().getBodyList()) {
-        	Point2D bodyAng = new Point2D();
-        	bodyAng.x		= Math.atan(candidate.getX()/candidate.getY());
-        	bodyAng.y		= Math.atan(candidate.getZ()/candidate.getY());
-        	   	
-        	double angDist 	= this.angularDistance(motion, bodyAng);
-       
-        	double bDist	= candidate.getDistance();
+        	Point2D bodyAng = this.cartesianToAbsRad(candidate.getPos());
+        	double	bDist	= candidate.getDistance();
+        	
+        	double 	angDist = this.angularDistance(motion, bodyAng);
         	
         	// TODO proper size calculation
         	if (
@@ -110,7 +107,8 @@ public class CamController {
         if (closest != null) {
         	Point3D motionPos = this.absPosToCartesian(motion, closest.getDistance());
 	        closest.moved(motionPos);
-			this.controller.getGui().printConsole("Bewegung erkannt (" + df.format(closest.getX()) + ", " + df.format(closest.getY()) + ", " +  df.format(closest.getZ()) + ")", 6);
+	        
+			this.controller.getGui().printConsole("Bewegung erkannt (" + df.format(motionPos.x) + ", " + df.format(motionPos.y) + ", " +  df.format(motionPos.z) + ")", 6);
         }
         
         this.controller.getRoomState().lock(false);
@@ -139,6 +137,15 @@ public class CamController {
 		return Math.acos(Math.cos(R90-p1.y) * Math.cos(R90-p2.y) + Math.sin(R90-p1.y) * Math.sin(R90-p2.y) * Math.cos(p1.x-p2.x));
 	}
 	
+	private Point2D cartesianToAbsRad(Point3D cart) {
+		Point2D absRad = new Point2D();
+		
+		absRad.x 		= Math.atan(cart.x / cart.y);
+		absRad.y 		= Math.atan(cart.z / cart.y);
+		
+		return absRad;
+	}
+	
 	private void focus() {
 		Body masterBody = null;
 		
@@ -152,9 +159,7 @@ public class CamController {
 		}
 		
 		if (masterBody != null) {
-			Point2D bodyRad = new Point2D(); 
-			bodyRad.x 		= Math.atan(masterBody.getX() / masterBody.getY());
-			bodyRad.y 		= Math.atan(masterBody.getZ() / masterBody.getY());
+			Point2D bodyRad = cartesianToAbsRad(masterBody.getPos());
 
 			if (
 				(Math.abs(bodyRad.x - this.getCamPosRad().x) > this.moveThreshold)

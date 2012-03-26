@@ -7,22 +7,21 @@ import java.util.Queue;
 import application.Controller;
 
 public class Body {
-	private double 			x, y, z, probability;
+	private double 			probability;
+	private Point3D			pos;
 	private Date			lastSeen;
 	private Controller 		controller;
 	private Queue<Point3D>	motionQueue;
 	
-	public Body(double x, double y, double z, Controller controller) {
+	public Body(Point3D pos, Controller controller) {
 		this.controller		= controller;
 		this.probability 	= this.controller.getConfiguration().getDetectBonus();
-		this.x 				= x;
-		this.y 				= y;
-		this.z 				= z;
+		this.pos			= pos;
 		this.lastSeen		= new Date();
 		this.motionQueue	= new LinkedList<Point3D>();
 	}
 	
-	public double velocity(double x, double y, double z) {
+	public double calcVelocity(double x, double y, double z) {
 		double 	distance 	= this.distance(x, y, z);
 		long 	time 		= (new Date()).getTime() - this.lastSeen.getTime();
 		double	velocity	= distance / time * 1000;
@@ -31,29 +30,23 @@ public class Body {
 	}
 	
 	private double distance(double x2, double y2, double z2) {
-		return Math.sqrt(Math.pow(x2-this.x, 2) + Math.pow(y2-this.y, 2) + Math.pow(z2-this.z, 2)) / 2;	
+		return Math.sqrt(Math.pow(x2-this.pos.x, 2) + Math.pow(y2-this.pos.y, 2) + Math.pow(z2-this.pos.z, 2)) / 2;	
 	}
 	
-	public void setPos(double x, double y, double z) {
-		this.x 				= x;
-		this.y 				= y;
-		this.z 				= z;
-		this.lastSeen 		= new Date();
+	public void setPos(Point3D pos) {
+		this.pos 		= pos;
+		this.lastSeen 	= new Date();
 		
 		this.addProbability(this.controller.getConfiguration().getDetectBonus());
 	}
 	
-	public double getX() {
-		return this.x;
+	public Point3D getPos() {
+		return this.pos;
 	}
-	public double getY() {
-		return this.y;
-	}
-	public double getZ() {
-		return this.z;
-	}
+
 	public double getDistance() {
-		return Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2));
+		// TODO 3D!!!!!
+		return Math.sqrt(Math.pow(this.pos.x, 2) + Math.pow(this.pos.y, 2));
 	}
 	public double getProbability() {
 		return this.probability;
@@ -79,10 +72,7 @@ public class Body {
 		
 		// TODO config
 		if (lastSeenDelta > 0.2) {
-			Point3D motionCenter = this.calcMotionCenter();
-			this.x = motionCenter.x;
-			this.y = motionCenter.y;
-			this.z = motionCenter.z;
+			this.pos = this.calcMotionCenter();
 		}
 		
 		// TODO config
