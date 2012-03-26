@@ -1,17 +1,15 @@
 package algorithm;
 
-public class Point3D {
-	public double x,y,z;
+public class Point3D extends Point2D {
+	public double z;
 	
 	public Point3D() {
-		this.x = 0;
-		this.y = 0;
+		super();
 		this.z = 0;
 	}
 	
 	public Point3D(double x, double y, double z) {
-		this.x = x;
-		this.y = y;
+		super(x, y);
 		this.z = z;
 	}
 }
