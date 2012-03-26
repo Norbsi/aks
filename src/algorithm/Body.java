@@ -1,6 +1,8 @@
 package algorithm;
 
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.Queue;
 
 import application.Controller;
 
@@ -8,6 +10,7 @@ public class Body {
 	private double 			x, y, z, probability;
 	private Date			lastSeen;
 	private Controller 		controller;
+	private Queue<Point3D>	motionQueue;
 	
 	public Body(double x, double y, double z, Controller controller) {
 		this.controller		= controller;
@@ -16,6 +19,7 @@ public class Body {
 		this.y 				= y;
 		this.z 				= z;
 		this.lastSeen		= new Date();
+		this.motionQueue	= new LinkedList<Point3D>();
 	}
 	
 	public double velocity(double x, double y, double z) {
@@ -49,7 +53,7 @@ public class Body {
 		return this.z;
 	}
 	public double getDistance() {
-		return Math.sqrt(Math.pow(this.x,2) + Math.pow(this.y, 2));
+		return Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2));
 	}
 	public double getProbability() {
 		return this.probability;
@@ -66,8 +70,38 @@ public class Body {
 		this.addProbability(-this.controller.getConfiguration().getDecay());
 	}
 	
-	public void moved(Point2D p) {
+	public void moved(Point3D motion) {
+		// TODO config
+		if (this.motionQueue.size() > 10) this.motionQueue.poll();
+		this.motionQueue.add(motion);
+		
+		long lastSeenDelta = (new Date()).getTime() - this.lastSeen.getTime();
+		
+		// TODO config
+		if (lastSeenDelta > 0.2) {
+			Point3D motionCenter = this.calcMotionCenter();
+			this.x = motionCenter.x;
+			this.y = motionCenter.y;
+			this.z = motionCenter.z;
+		}
+		
 		// TODO config
 		this.addProbability(0.05);
+	}
+	
+	private Point3D calcMotionCenter() {
+		Point3D center = new Point3D();
+		
+		for (Point3D point : this.motionQueue) {
+			center.x += point.x;
+			center.y += point.y;
+			center.z += point.z;
+		}
+		
+		center.x /= this.motionQueue.size();
+		center.y /= this.motionQueue.size();
+		center.z /= this.motionQueue.size();
+		
+		return center;
 	}
 }

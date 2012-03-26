@@ -108,7 +108,8 @@ public class CamController {
         }
         
         if (closest != null) {
-	        closest.moved(motion);
+        	Point3D motionPos = this.absPosToCartesian(motion, closest.getDistance());
+	        closest.moved(motionPos);
 			this.controller.getGui().printConsole("Bewegung erkannt (" + df.format(closest.getX()) + ", " + df.format(closest.getY()) + ", " +  df.format(closest.getZ()) + ")", 6);
         }
         
