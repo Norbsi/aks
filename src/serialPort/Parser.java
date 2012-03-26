@@ -25,21 +25,18 @@ public class Parser {
 		match = pat.matcher(in);
 		while (match.find()) {
 			pos = match.group(1);
-			System.out.println(pos);
 			this.controller.getCamState().setCamPos(new Point2D(this.controller.getCamState().getCamPos().x, Integer.parseInt(pos)));
 		}
 		pat = Pattern.compile("SpeedX: ([-]?\\d+)");
 		match = pat.matcher(in);
 		while (match.find()) {
 			pos = match.group(1);
-			System.out.println(pos);
 			this.controller.getCamState().setCamSpeedX(Integer.parseInt(pos));
 		}
 		pat = Pattern.compile("SpeedY: ([-]?\\d+)");
 		match = pat.matcher(in);
 		while (match.find()) {
 			pos = match.group(1);
-			System.out.println(pos);
 			this.controller.getCamState().setCamSpeedY(Integer.parseInt(pos));
 		}
 	}
