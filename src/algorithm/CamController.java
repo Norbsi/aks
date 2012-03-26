@@ -58,12 +58,12 @@ public class CamController {
 	    	
 	    	this.controller.getRoomState().lock(true);
 	    	for (Body candidate : this.controller.getRoomState().getBodyList()) {
-	    		double velocity = candidate.calcVelocity(cartPos.x, cartPos.y, cartPos.z);
+	    		double velocity = candidate.calcVelocity(cartPos);
 	    		
 	    		if (velocity <= this.maxVelocity) {
 	    			if (
 	    				closest == null
-	    				|| closest.calcVelocity(cartPos.x, cartPos.y, cartPos.z) < velocity
+	    				|| closest.calcVelocity(cartPos) < velocity
 	    			) {
 	    				closest = candidate;
 	    			}

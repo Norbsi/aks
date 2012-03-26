@@ -21,16 +21,16 @@ public class Body {
 		this.motionQueue	= new LinkedList<Point3D>();
 	}
 	
-	public double calcVelocity(double x, double y, double z) {
-		double 	distance 	= this.distance(x, y, z);
+	public double calcVelocity(Point3D p2) {
+		double 	distance 	= this.distance(p2);
 		long 	time 		= (new Date()).getTime() - this.lastSeen.getTime();
 		double	velocity	= distance / time * 1000;
 		
 		return velocity;
 	}
 	
-	private double distance(double x2, double y2, double z2) {
-		return Math.sqrt(Math.pow(x2-this.pos.x, 2) + Math.pow(y2-this.pos.y, 2) + Math.pow(z2-this.pos.z, 2)) / 2;	
+	private double distance(Point3D p2) {
+		return Math.sqrt(Math.pow(p2.x-this.pos.x, 2) + Math.pow(p2.y-this.pos.y, 2) + Math.pow(p2.z-this.pos.z, 2)) / 2;	
 	}
 	
 	public void setPos(Point3D pos) {
