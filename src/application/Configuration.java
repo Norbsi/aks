@@ -13,7 +13,7 @@ public class Configuration {
 	private 				int		baud, yres, deviceid, decay, decayTime, maxCamPos, maxCamAngle, moveThresholdX, moveThresholdY, bodyThreshold, verbosity;
 	private 				String	port;
 	private					boolean camOn;
-	private					double	maxVelocity, minHeight, camFOVX, camFOVY, detectBonus;
+	private					double	maxVelocity, minHeight, camFOVX, camFOVY, detectBonus, motionBonus;
 	
 	private transient final	File 	inifile = new File("config.ini");
 	private transient 		Ini 	ini;
@@ -35,6 +35,7 @@ public class Configuration {
 		this.camFOVY			= Double.parseDouble(this.ini.get("cam", "fovy"));
 		
 		this.detectBonus		= Double.parseDouble(this.ini.get("algorithm", "detectbonus"));
+		this.motionBonus		= Double.parseDouble(this.ini.get("algorithm", "motionbonus"));
 		this.decay				= Integer.parseInt(this.ini.get("algorithm", "decay"));
 		this.decayTime			= Integer.parseInt(this.ini.get("algorithm", "decaytime"));
 		this.maxVelocity		= Double.parseDouble(this.ini.get("algorithm", "maxvelocity"));
@@ -103,6 +104,9 @@ public class Configuration {
 	}	
 	public double getDetectBonus() {
 		return this.detectBonus;
+	}
+	public double getMotionBonus() {
+		return this.motionBonus;
 	}
 	public int getDecay() {
 		return this.decay;

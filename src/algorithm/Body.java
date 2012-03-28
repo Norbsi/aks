@@ -4,18 +4,19 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import application.Configuration;
 import application.Controller;
 
 public class Body {
 	private double 			probability;
 	private Point3D			pos;
 	private Date			lastSeen;
-	private Controller 		controller;
+	private Configuration	configuration;
 	private Queue<Point3D>	motionQueue;
 	
 	public Body(Point3D pos, Controller controller) {
-		this.controller		= controller;
-		this.probability 	= this.controller.getConfiguration().getDetectBonus();
+		this.configuration	= controller.getConfiguration();
+		this.probability 	= this.configuration.getDetectBonus();
 		this.pos			= pos;
 		this.lastSeen		= new Date();
 		this.motionQueue	= new LinkedList<Point3D>();
@@ -37,7 +38,7 @@ public class Body {
 		this.pos 		= pos;
 		this.lastSeen 	= new Date();
 		
-		this.addProbability(this.controller.getConfiguration().getDetectBonus());
+		this.addProbability(this.configuration.getDetectBonus());
 	}
 	
 	public Point3D getPos() {
@@ -60,7 +61,7 @@ public class Body {
 	}
 	
 	public void decay() {
-		this.addProbability(-this.controller.getConfiguration().getDecay());
+		this.addProbability(-this.configuration.getDecay());
 	}
 	
 	public void moved(Point3D motion) {
@@ -74,9 +75,8 @@ public class Body {
 		if (lastSeenDelta > 0.2) {
 			this.pos = this.calcMotionCenter();
 		}
-		
-		// TODO config
-		this.addProbability(0.05);
+
+		this.addProbability(this.configuration.getMotionBonus());
 	}
 	
 	private Point3D calcMotionCenter() {
