@@ -10,7 +10,7 @@ import org.ini4j.Ini;
 import org.ini4j.InvalidFileFormatException;
 
 public class Configuration {
-	private 				int		baud, yres, deviceid, decay, decayTime, maxCamPos, maxCamAngle, moveThreshold, bodyThreshold, verbosity;
+	private 				int		baud, yres, deviceid, decay, decayTime, maxCamPos, maxCamAngle, moveThresholdX, moveThresholdY, bodyThreshold, verbosity;
 	private 				String	port;
 	private					boolean camOn;
 	private					double	maxVelocity, minHeight, camFOVX, camFOVY, detectBonus;
@@ -39,7 +39,8 @@ public class Configuration {
 		this.decayTime			= Integer.parseInt(this.ini.get("algorithm", "decaytime"));
 		this.maxVelocity		= Double.parseDouble(this.ini.get("algorithm", "maxvelocity"));
 		this.minHeight			= Double.parseDouble(this.ini.get("algorithm", "minheight"));
-		this.moveThreshold		= Integer.parseInt(this.ini.get("algorithm", "movethreshold"));
+		this.moveThresholdX		= Integer.parseInt(this.ini.get("algorithm", "movethresholdx"));
+		this.moveThresholdY		= Integer.parseInt(this.ini.get("algorithm", "movethresholdy"));
 		this.bodyThreshold		= Integer.parseInt(this.ini.get("algorithm", "bodythreshold"));
 	}
 	
@@ -121,8 +122,11 @@ public class Configuration {
 	public double getMinHeight() {
 		return this.minHeight;
 	}
-	public int getMoveThreshold() {
-		return this.moveThreshold;
+	public int getMoveThresholdX() {
+		return this.moveThresholdX;
+	}
+	public int getMoveThresholdY() {
+		return this.moveThresholdY;
 	}
 	public int getBodyThreshold() {
 		return this.bodyThreshold;

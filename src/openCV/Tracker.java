@@ -30,8 +30,8 @@ public class Tracker {
 		
 		this.yPx 	= this.configuration.getYres();
 		this.xPx 	= this.yPx * 4 / 3;
-		this.thXPx	= (int) Math.round(this.xPx / this.configuration.getCamFOVX() * (this.configuration.getCamFOVX() - this.configuration.getMoveThreshold()) / 2);
-		this.thYPx	= (int) Math.round(this.yPx / this.configuration.getCamFOVY() * (this.configuration.getCamFOVY() - this.configuration.getMoveThreshold()) / 2);
+		this.thXPx	= (int) Math.round(this.xPx / this.configuration.getCamFOVX() * (this.configuration.getCamFOVX() - this.configuration.getMoveThresholdX()) / 2);
+		this.thYPx	= (int) Math.round(this.yPx / this.configuration.getCamFOVY() * (this.configuration.getCamFOVY() - this.configuration.getMoveThresholdY()) / 2);
 		
 		this.controller.getGui().printConsole("Auflösung (px): " + this.xPx + "x" + this.yPx, 2);
 		this.controller.getGui().printConsole("SchwellwerteX (px): " + this.thXPx + " und " + (this.xPx - this.thXPx) + " (" + this.xPx + ")", 2);

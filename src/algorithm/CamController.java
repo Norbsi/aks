@@ -7,7 +7,7 @@ import application.Controller;
 
 public class CamController {
 	private Controller 			controller;
-	private double 				maxVelocity, minHeight, moveThreshold, camFOVX, camFOVY;
+	private double 				maxVelocity, minHeight, moveThresholdX, moveThresholdY, camFOVX, camFOVY;
 	private DecimalFormat 		df = new DecimalFormat("#.##");
 	private int					maxCamPos, maxCamAngle, bodyThreshold;
 	private static final double R90 = Math.toRadians(90);
@@ -21,7 +21,8 @@ public class CamController {
 		this.maxCamAngle			= configuration.getMaxCamAngle();
 		this.maxVelocity			= configuration.getMaxVelocity();
 		this.minHeight				= configuration.getMinHeight();
-		this.moveThreshold			= Math.toRadians(configuration.getMoveThreshold());
+		this.moveThresholdX			= Math.toRadians(configuration.getMoveThresholdX());
+		this.moveThresholdY			= Math.toRadians(configuration.getMoveThresholdY());
 		this.bodyThreshold			= configuration.getBodyThreshold();
 		this.camFOVX				= configuration.getCamFOVX();
 		this.camFOVY				= configuration.getCamFOVY();
@@ -167,8 +168,8 @@ public class CamController {
 			Point2D bodyRad = cartesianToAbsRad(masterBody.getPos());
 
 			if (
-				(Math.abs(bodyRad.x - this.getCamPosRad().x) > this.moveThreshold)
-				|| (Math.abs(bodyRad.y - this.getCamPosRad().y) > this.moveThreshold)
+				(Math.abs(bodyRad.x - this.getCamPosRad().x) > this.moveThresholdX)
+				|| (Math.abs(bodyRad.y - this.getCamPosRad().y) > this.moveThresholdY)
 			) {
 				Point2D newCamPos 	= new Point2D();
 				newCamPos.x 		= bodyRad.x / (Math.toRadians(this.maxCamAngle) / this.maxCamPos);

@@ -17,7 +17,7 @@ public class Map extends JComponent {
 	 */
 	private static final long 	serialVersionUID = -8929711985144231275L;
 	private Controller 			controller;
-	private int					maxCamPos, moveThreshold, bodyThreshold, camFOVX, maxCamAngle;
+	private int					maxCamPos, moveThresholdX, bodyThreshold, camFOVX, maxCamAngle;
 	
 	public Map(Controller controller) {
 		this.controller 			= controller;
@@ -25,7 +25,7 @@ public class Map extends JComponent {
 		
 		this.maxCamPos 				= configuration.getMaxCamPos();
 		this.maxCamAngle			= configuration.getMaxCamAngle();
-		this.moveThreshold			= configuration.getMoveThreshold();
+		this.moveThresholdX			= configuration.getMoveThresholdX();
 		this.bodyThreshold			= configuration.getBodyThreshold();
 		this.camFOVX				= (int) Math.round(configuration.getCamFOVX());
 	}
@@ -48,7 +48,7 @@ public class Map extends JComponent {
 			// 90->start angle (north)
 			g.fillArc(-width/2, -height/2, width*2, height*2, 90 + (this.camFOVX/2) - (int) camPosAngle, -this.camFOVX);
 			g.setColor(Color.GRAY);
-			g.fillArc(-width/2, -height/2, width*2, height*2, 90 + this.moveThreshold/2 - (int) camPosAngle, -this.moveThreshold);
+			g.fillArc(-width/2, -height/2, width*2, height*2, 90 + this.moveThresholdX/2 - (int) camPosAngle, -this.moveThresholdX);
 			
 			g.setColor(Color.YELLOW);
 	    	for (Body body : this.controller.getRoomState().getBodyList()) {
